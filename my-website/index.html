@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            background: linear-gradient(360deg, #e2c9ec 0%, #f9e6b3 50%, #c9eaf3 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+        .row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        .row img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .row a:hover img {
+            transform: scale(1.08);
+        }
+        .row h1 {
+            margin: 0;
+            font-size: 2em;
+            color: #4250d0c4;
+            font-family: system-ui, sans-serif;
+            background: linear-gradient(90deg, #e91e63, #2196f3, #ffeb3b);
+            background-size: 400% auto;
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 6s linear infinite alternate;
+        }
+        @keyframes gradientText {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        .contact {
+            font-family: system-ui, sans-serif;
+            font-size: 0.8em;
+            color: #333;
+            opacity: 0.7;
+            margin: 1px 0;
+            display: inline-block;
+        }
+        .hello {
+            text-align: center;
+            font-size: 1em;
+            color: #0a3c21;
+            margin-top: 2px;
+            font-family: system-ui, sans-serif;
+            opacity: 0.8;
+            font-weight: bold;
+        }
+        .menu {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            background: linear-gradient(90deg,#9299d6c4, #4ac8df, #2196f3);
+            padding: 8px 20px;
+            border-radius: 32px;
+            bottom: 24px;
+            left: 45%;
+            transform: translateX(-50%);
+            width: auto;
+            z-index: 100;
+            font-family: 'Dancing Script', cursive, Arial, sans-serif;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .menu a {
+            position: relative;
+            text-decoration: none;
+            color: #4250d0c4;
+            font-weight: bold;
+            margin: 0 8px;
+            transition: color 0.3s;
+            
+        }
+        .menu a i {
+            font-size: 1.7em;
+        }
+        .menu a:hover {
+            color: #c4c4ac;
+        }
+        .menu a.active {
+            color: #fafafa !important;
+        }
+        .menu.hide {
+            transform: translateY(100px);
+            opacity: 0;
+            pointer-events: none;
+        }
+        .menu.show {
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr); /* 6 ảnh mỗi hàng */
+            gap: 24px;
+            padding: 24px 5vw;
+            justify-items: center;
+        }
+        @media (max-width:1204px) {
+            .gallery {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+        
+            }
+        }
+        .gallery img {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 20px;
+            transition: transform 0.1s;
+            cursor: pointer;
+        }
+        .gallery img:hover {
+            transform: scale(1.02);
+        }
+        .gallery figure {
+            margin: 0;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .gallery figcaption {
+            position: absolute;
+            left: 50%;
+            bottom: 2px;
+            transform: translateX(-50%);
+            background: rgba(56, 34, 34, 0.7);
+            color: #fff;
+            font-size: 0.9em;
+            padding: 4px 20px;
+            border-radius: 15px;
+            opacity: 0.8;
+            transition: none;
+            text-align: center;
+            display: inline-block;
+            max-width: 90%;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+        
+        .dynamic-popup {
+            position: fixed;
+            left: 50%;
+            bottom: 90px;
+            transform: translateX(-50%) translateY(30px);
+            z-index: 9999;
+            display: block;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s, transform 0.4s;
+        }
+        .dynamic-popup.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateX(-50%) translateY(0);
+        }
+        .dynamic-content {
+            background: #fff;
+            border-radius: 24px;
+            padding: 18px 32px;
+            min-width: 220px;
+            max-width: 90vw;
+            text-align: left;
+            font-family: system-ui, sans-serif;
+            font-size: 1.1em;
+            font-weight: 500;
+            transform: scale(1);
+        }
+        .dynamic-popup.active .dynamic-content {
+            transform: scale(1.04);
+        }
+        #search-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        #searchInput {
+            width: 80%;
+            margin: 0 auto 12px auto;
+            display: block;
+        }
+        #searchResult em {
+            font-size: 0.8em;
+            opacity: 0.8;
+            color: #e53935;
+            
+        }
+        
+        @keyframes fadeInEm {
+            from { opacity: 0; transform: translateY(10px);}
+            to { opacity: 0.8; transform: translateY(0);}
+        }
+        .gallery figure.filter-anim {
+            animation: fadeMoveIn 0.5s;
+            opacity: 0.8;
+            transform: scale(0.96) translateY(10px);
+        }
+        @keyframes fadeMoveIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(40px);
+            }
+            to {
+                opacity: 0.8;
+                transform: scale(0.96) translateY(10px);
+            }
+        }
+        #zoom-view {
+            position: relative;
+            width: 100%;
+            margin: 32px 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            z-index: 10;
+            animation: fadeInZoom 0.25s;
+        }
+        @keyframes fadeInZoom {
+            from { opacity: 0; transform: scale(0.95);}
+            to { opacity: 1; transform: scale(1);}
+        }
+        .zoom-img {
+            width: 100%;
+            max-width: 300px;
+            max-height: 50vh;
+            border-radius: 24px;
+            margin-right: 32px;
+            background: #fff;
+            padding: 12px;
+            object-fit: contain;
+            display: block;
+        }
+        @keyframes zoomPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.7) rotate(-8deg);
+            }
+            60% {
+                opacity: 1;
+                transform: scale(1.08) rotate(2deg);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) rotate(0deg);
+            }
+        }
+        .zoom-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            font-size: 2em;
+            cursor: pointer;
+            color: #e53935;
+            background: none;
+            border: none;
+            outline: none;
+            z-index: 10;
+            transition: color 0.2s;
+        }
+        .zoom-info {
+            position: relative;              /* Định vị phần tử tương đối với các phần tử con */
+            background: #fff;                /* Nền trắng cho popup thông tin */
+            border-radius: 24px;             /* Bo tròn góc popup */
+            box-shadow: 0 8px 32px #0002;    /* Đổ bóng nhẹ cho popup */
+            padding: 22px 28px;              /* Khoảng cách bên trong popup (trên-dưới 22px, trái-phải 28px) */
+            min-width: 220px;                /* Chiều rộng tối thiểu */
+            max-width: 340px;                /* Chiều rộng tối đa */
+            font-family: system-ui, sans-serif; /* Font chữ hiện đại, dễ đọc */
+            color: #333;                     /* Màu chữ mặc định */
+            display: flex;                   /* Sử dụng flexbox để bố trí các phần tử con */
+            flex-direction: column;          /* Xếp các phần tử con theo cột (dọc) */
+            gap: 12px;                       /* Khoảng cách giữa các phần tử con */
+        }
+        .zoom-title {
+            font-size: 1.35em;               /* Cỡ chữ lớn cho tên sản phẩm */
+            font-weight: bold;               /* Chữ đậm */
+            margin-bottom: 6px;              /* Khoảng cách dưới */               
+            text-align: left;                /* Căn trái */
+        }
+        .zoom-price {
+            color: #e53935;                  /* Màu đỏ cho giá */
+            font-size: 1.18em;               /* Cỡ chữ lớn hơn bình thường */
+            font-weight: bold;               /* Chữ đậm */   
+            margin-bottom: 4px;              /* Khoảng cách dưới */
+            text-align: left;                /* Căn trái */
+        }
+        .zoom-size-color {
+            font-size: 1em;                  /* Cỡ chữ bình thường */
+            color: #444;                     /* Màu chữ xám đậm */
+            margin-bottom: 4px;              /* Khoảng cách dưới */
+            line-height: 1.5;                /* Giãn dòng cho dễ đọc */
+        }
+        .zoom-intro {
+            font-style:italic;               /* Chữ nghiêng cho mô tả */
+            font-weight: normal;              /* Chữ thường cho mô tả */
+            font-size: 0.8em;               /* Cỡ chữ hơi nhỏ */
+            color: #222;                     /* Màu chữ xám đậm hơn */
+            margin-top: 2px;                 /* Khoảng cách trên */
+            line-height: 1.6;                /* Giãn dòng lớn cho đoạn mô tả */
+            text-align: left;                /* Căn trái */
+        }
+        .footer-end {
+            text-align: center;
+            font-size: 0.95em;
+            color: #888;
+            opacity: 0.7;
+            margin-bottom: 24px;
+            margin-top: 32px;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <a href="https://www.facebook.com/share/1F2p2B7MUk/" target="_blank">
+            <img src="photos/logo.webp" alt="LOGO">
+        </a>
+        <div>
+            <h1>Tiệm Len Nhà Nghĩa</h1>
+            <div>
+                <p class="contact">Giá cả Ô CÊ 😘</p><br>
+                <p class="contact">Có nhận làm theo yêu cầu 🎇</p><br>
+                <p class="contact">Tăng tính thẩm mỹ cho không gian sống của bạn 🌻</p> <br>
+            </div>
+        </div>
+    </div>
+    <nav class="menu">
+        <a href="#tiemkim"><i class="fa-solid fa-search"></i></a>
+        <a href="#lienhe"><i class="fa-solid fa-comment-dots"></i></a>
+    </nav>
+    <div class="marquee-wrap"><hr>
+        <p class="hello">Chào mừng các bạn đến với tiệm len của tớ!</p>
+    </div>
+    <div id="zoom-view" style="display:none;">
+        <img class="zoom-img" src="" alt="">
+        <div class="zoom-info">
+            <button class="zoom-close" title="Đóng">&times;</button>
+            <h2 class="zoom-title"></h2>
+            <div class="zoom-price"></div>
+            <div class="zoom-size-color"></div>
+            <p class="zoom-intro"></p>
+        </div>
+    </div>
+    <div class="gallery"></div>
+    <div id="gallery-message" style="text-align:center;margin:16px 0 0 0;"></div>
+    <div id="dynamic-popup" class="dynamic-popup">
+        <div class="dynamic-content" id="dynamic-content">
+            <div style="text-align:center;">
+                <strong>Liên Hệ</strong>
+            </div>
+            <hr style="margin: 20px 10;">
+            <div style="font-size:0.8em;opacity:0.8;">
+                ZALO: 0385105764
+                <br>
+                FACEBOOK: <a href="https://www.facebook.com/share/1F2p2B7MUk/" target="_blank">Tiệm Len Nhà Nghĩa</a>
+                <br>
+                TIKTOK: <a href="https://www.tiktok.com/@tiemlennhanghia" target="_blank">@tiemlennhanghia</a>
+                <br>
+                INSTAGRAM: <a href="https://www.instagram.com/tiemlennhanghia/" target="_blank">@tiemlennhanghia</a>
+            </div>
+        </div>
+    </div>
+    <div id="search-popup" class="dynamic-popup">
+        <div class="dynamic-content" id="search-content">
+            <input type="text" id="searchInput" placeholder="Bạn cần gì nè..." style="width:80%;padding:8px 12px;border-radius:12px;border:1px solid #ccc;margin-bottom:12px;">
+            <div id="searchResult" style="font-size:0.95em;color:#333;text-align:left;"></div>
+        </div>
+    </div>
+    <div id="product-popup" class="dynamic-popup" style="z-index:10000;">
+        <div class="dynamic-content" id="product-content" style="position:relative;">
+            <span id="close-product-popup" style="position:absolute;top:12px;right:18px;font-size:1.5em;cursor:pointer;color:#e53935;">&times;</span>
+            <div id="product-info"></div>
+        </div>
+    </div>
+    <div class="footer-end">
+        © 2025 Tiệm Len Nhà Nghĩa. Cảm ơn bạn đã ghé thăm! <br>
+        Thiết kế và phát triển bởi <a href="https://www.facebook.com/share/1F2p2B7MUk/" target="_blank">Tiệm Len Nhà Nghĩa</a>
+    </div>
+    <script src="products.js"></script>
+    <script src="galleryImages.js"></script>
+    <script>
+       
+
+        const gallery = document.querySelector('.gallery');
+        const searchInput = document.getElementById('searchInput');
+        const zoomView = document.getElementById('zoom-view');
+        const PAGE_SIZE = 15;
+        let currentPage = 1;
+
+        function renderGalleryPage(page) {
+            gallery.innerHTML = '';
+            const start = (page - 1) * PAGE_SIZE;
+            const end = Math.min(start + PAGE_SIZE, galleryImages.length);
+            for (let i = start; i < end; i++) {
+                const imgData = galleryImages[i];
+                const figure = document.createElement('figure');
+                const img = document.createElement('img');
+                img.src = imgData.src;
+                img.width = 200;
+                img.height = 200;
+                img.loading = "lazy";
+                img.style.display = "block";
+                img.addEventListener('load', function() {
+                    const caption = document.createElement('figcaption');
+                    caption.textContent = imgData.code;
+                    figure.appendChild(caption);
+                });
+                figure.appendChild(img);
+                figure.addEventListener('click', function() {
+                    showZoomView(imgData.code, imgData.src);
+                });
+                gallery.appendChild(figure);
+            }
+            renderPagination();
+        }
+
+        function renderPagination() {
+            let pagination = document.getElementById('gallery-pagination');
+            if (!pagination) {
+                pagination = document.createElement('div');
+                pagination.id = 'gallery-pagination';
+                pagination.style.textAlign = 'center';
+                pagination.style.margin = '16px 0';
+                gallery.parentNode.insertBefore(pagination, document.getElementById('gallery-message'));
+            }
+            const totalPages = Math.ceil(galleryImages.length / PAGE_SIZE);
+            let html = '';
+            if (currentPage > 1) {
+                html += `<button id="prev-page">Trang trước</button> `;
+            }
+            html += `Trang ${currentPage} / ${totalPages}`;
+            if (currentPage < totalPages) {
+                html += ` <button id="next-page">Trang sau</button>`;
+            }
+            pagination.innerHTML = html;
+
+            if (currentPage > 1) {
+                document.getElementById('prev-page').onclick = () => {
+                    currentPage--;
+                    renderGalleryPage(currentPage);
+                };
+            }
+            if (currentPage < totalPages) {
+                document.getElementById('next-page').onclick = () => {
+                    currentPage++;
+                    renderGalleryPage(currentPage);
+                };
+            }
+        }
+
+        // Khởi tạo gallery lần đầu
+        renderGalleryPage(currentPage);
+
+        let isSearching = false;
+        let searchResults = [];
+        let searchPage = 1;
+
+        function renderSearchPage(page) {
+            gallery.innerHTML = '';
+            const start = (page - 1) * PAGE_SIZE;
+            const end = Math.min(start + PAGE_SIZE, searchResults.length);
+            for (let i = start; i < end; i++) {
+                const imgData = searchResults[i];
+                const figure = document.createElement('figure');
+                figure.innerHTML = `
+                    <img src="${imgData.src}" loading="lazy">
+                    <figcaption>${imgData.code}</figcaption>
+                `;
+                figure.addEventListener('click', function() {
+                    showZoomView(imgData.code, imgData.src);
+                });
+                gallery.appendChild(figure);
+            }
+            renderSearchPagination();
+        }
+
+        function renderSearchPagination() {
+            let pagination = document.getElementById('gallery-pagination');
+            if (!pagination) {
+                pagination = document.createElement('div');
+                pagination.id = 'gallery-pagination';
+                pagination.style.textAlign = 'center';
+                pagination.style.margin = '16px 0';
+                gallery.parentNode.insertBefore(pagination, document.getElementById('gallery-message'));
+            }
+            const totalPages = Math.ceil(searchResults.length / PAGE_SIZE) || 1;
+            let html = '';
+            if (searchPage > 1) {
+                html += `<button id="prev-search-page">Trang trước</button> `;
+            }
+            html += `Trang ${searchPage} / ${totalPages}`;
+            if (searchPage < totalPages) {
+                html += ` <button id="next-search-page">Trang sau</button>`;
+            }
+            pagination.innerHTML = html;
+
+            if (searchPage > 1) {
+                document.getElementById('prev-search-page').onclick = () => {
+                    searchPage--;
+                    renderSearchPage(searchPage);
+                };
+            }
+            if (searchPage < totalPages) {
+                document.getElementById('next-search-page').onclick = () => {
+                    searchPage++;
+                    renderSearchPage(searchPage);
+                };
+            }
+        }
+
+        searchInput.addEventListener('input', function() {
+            clearTimeout(searchTimeout);
+            zoomView.style.display = "none"; // Ẩn zoomView khi bắt đầu tìm kiếm mới
+            searchTimeout = setTimeout(() => {
+                const query = this.value.trim().toLowerCase();
+                gallery.innerHTML = '';
+                document.getElementById('searchResult').innerHTML = '';
+                isSearching = !!query;
+                let found = false;
+                if (query) {
+                    galleryImages.forEach(imgData => {
+                        const product = (window.products && window.products[imgData.code]) ? window.products[imgData.code] : {};
+                        const infoText = [
+                            product.name,
+                            product.intro,
+                            product.size,
+                            product.color,
+                            product.price
+                        ].filter(Boolean).join(' ').toLowerCase();
+                        if (
+                            imgData.code.toLowerCase().includes(query) ||
+                            infoText.includes(query)
+                        ) {
+                            const figure = document.createElement('figure');
+                            figure.innerHTML = `
+                                <img src="${imgData.src}" loading="lazy">
+                                <figcaption>${imgData.code}</figcaption>
+                            `;
+                            figure.addEventListener('click', function() {
+                                showZoomView(imgData.code, imgData.src);
+                            });
+                            gallery.appendChild(figure);
+                            found = true;
+                        }
+                    });
+                    if (!found) {
+                        document.getElementById('searchResult').innerHTML = '<em>Không tìm thấy kết quả phù hợp!</em>';
+                    }
+                } else {
+                    isSearching = false;
+                    loadedCount = 0;
+                    renderGalleryChunk();
+                    document.getElementById('searchResult').innerHTML = '';
+                }
+            }, 150); // Chỉ thực hiện tìm kiếm sau 150ms kể từ lần nhập cuối
+        });
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.trim().toLowerCase();
+                document.getElementById('searchResult').innerHTML = '';
+                isSearching = !!query;
+                searchResults = [];
+                searchPage = 1;
+                if (query) {
+                    galleryImages.forEach(imgData => {
+                        const product = (window.products && window.products[imgData.code]) ? window.products[imgData.code] : {};
+                        const infoText = [
+                            product.name,
+                            product.intro,
+                            product.size,
+                            product.color,
+                            product.price
+                        ].filter(Boolean).join(' ').toLowerCase();
+                        if (
+                            imgData.code.toLowerCase().includes(query) ||
+                            infoText.includes(query)
+                        ) {
+                            searchResults.push(imgData);
+                        }
+                    });
+                    if (searchResults.length === 0) {
+                        gallery.innerHTML = '';
+                        document.getElementById('searchResult').innerHTML = '<em>Không tìm thấy kết quả phù hợp!</em>';
+                        let pagination = document.getElementById('gallery-pagination');
+                        if (pagination) pagination.innerHTML = '';
+                    } else {
+                        renderSearchPage(searchPage);
+                    }
+                } else {
+                    isSearching = false;
+                    searchResults = [];
+                    searchPage = 1;
+                    renderGalleryPage(currentPage);
+                    let pagination = document.getElementById('gallery-pagination');
+                    if (pagination) pagination.innerHTML = '';
+                }
+            }
+        });
+
+        function showZoomView(code, imgSrc) {
+            const product = window.products?.[code];
+            zoomView.style.display = "flex";
+            zoomView.querySelector('.zoom-img').src = imgSrc;
+            zoomView.querySelector('.zoom-img').alt = product?.name || code;
+            zoomView.querySelector('.zoom-title').textContent = product?.name || code;
+            zoomView.querySelector('.zoom-price').textContent = product?.price || "";
+            zoomView.querySelector('.zoom-size-color').innerHTML = `
+                <span style="color:#2196f3;">Kích cỡ:</span> ${product?.size || "Đang cập nhật"}
+                <br>
+                <span style="color:#2196f3;">Màu sắc:</span> ${product?.color || "Đang cập nhật"}
+            `;
+            zoomView.querySelector('.zoom-intro').textContent = product?.intro || "";
+            zoomView.querySelector('.zoom-close').onclick = function() {
+                zoomView.style.display = "none";
+            };
+            setTimeout(() => {
+                zoomView.scrollIntoView({ behavior: "smooth", block: "center" });
+            }, 100);
+        }
+
+        const menuItems = document.querySelectorAll('.menu a');
+        const popup = document.getElementById('dynamic-popup');
+        const lienheIcon = document.querySelector('.menu a[href="#lienhe"]');
+        const searchPopup = document.getElementById('search-popup');
+
+        menuItems.forEach((item) => {
+            item.addEventListener('click', function(e) {
+                if (this.classList.contains('active')) {
+                    this.classList.remove('active');
+                    if (this === lienheIcon) popup.classList.remove('active');
+                    if (this.querySelector('i').classList.contains('fa-search')) {
+                        searchPopup.classList.remove('active');
+                        searchInput.value = '';
+                        document.getElementById('searchResult').innerHTML = '';
+                        // Chỉ reset gallery nếu đang ở trạng thái tìm kiếm (isSearching = true)
+                        if (isSearching) {
+                            isSearching = false;
+                            searchResults = [];
+                            searchPage = 1;
+                            renderGalleryPage(currentPage);
+                        }
+                        // KHÔNG ẩn zoomView
+                    }
+                    return;
+                }
+                menuItems.forEach(i => i.classList.remove('active'));
+                popup.classList.remove('active');
+                searchPopup.classList.remove('active');
+                this.classList.add('active');
+                if (this === lienheIcon) {
+                    popup.classList.add('active');
+                }
+                if (this.querySelector('i').classList.contains('fa-search')) {
+                    searchPopup.classList.add('active');
+                    searchInput.value = '';
+                    document.getElementById('searchResult').innerHTML = '';
+                    // KHÔNG ẩn zoomView
+                }
+            });
+        });
+
+        let lastScroll = window.scrollY;
+        const menu = document.querySelector('.menu');
+        menu.classList.add('show');
+
+        window.addEventListener('scroll', function() {
+            let currentScroll = window.scrollY;
+            // Nếu đang tìm kiếm (đã Enter) và có popup tìm kiếm đang mở
+            if (
+                searchPopup.classList.contains('active') &&
+                (isSearching && searchResults.length > 0)
+            ) {
+                // Ẩn/hiện popup tìm kiếm cùng menu
+                if (currentScroll < lastScroll) {
+                    menu.classList.add('show');
+                    menu.classList.remove('hide');
+                    searchPopup.classList.add('active');
+                } else if (currentScroll > lastScroll) {
+                    menu.classList.add('hide');
+                    menu.classList.remove('show');
+                    searchPopup.classList.remove('active');
+                }
+                lastScroll = currentScroll;
+                return;
+            }
+            // ...phần xử lý cũ...
+            if (
+                searchPopup.classList.contains('active') &&
+                searchInput.value.trim() !== ''
+            ) {
+                menu.classList.add('show');
+                menu.classList.remove('hide');
+                return;
+            }
+            if (currentScroll < lastScroll) {
+                menu.classList.add('show');
+                menu.classList.remove('hide');
+                if (lienheIcon.classList.contains('active')) {
+                    popup.classList.add('active');
+                }
+                if (searchPopup && document.querySelector('.menu a[href="#tiemkim"]').classList.contains('active')) {
+                    searchPopup.classList.add('active');
+                }
+            } else if (currentScroll > lastScroll) {
+                menu.classList.add('hide');
+                menu.classList.remove('show');
+                popup.classList.remove('active');
+                if (searchPopup) {
+                    searchPopup.classList.remove('active');
+                    searchInput.value = '';
+                    document.getElementById('searchResult').innerHTML = '';
+                }
+            }
+            lastScroll = currentScroll;
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+const galleryImages = [
+    {src: "photos/023.webp", code: "023"},
+    {src: "photos/022.webp", code: "022"},
+    {src: "photos/021.webp", code: "021"},
+    {src: "photos/019.webp", code: "019"},
+    {src: "photos/018.webp", code: "018"},
+    {src: "photos/017.webp", code: "017"},
+    {src: "photos/016.webp", code: "016"},
+    {src: "photos/015.webp", code: "015"},
+    {src: "photos/013.webp", code: "013"},
+    {src: "photos/012.webp", code: "012"},
+    {src: "photos/011.webp", code: "011"},
+    {src: "photos/010.webp", code: "010"},
+    {src: "photos/009.webp", code: "009"},
+    {src: "photos/008.webp", code: "008"},
+    {src: "photos/007.webp", code: "007"},
+    {src: "photos/005.webp", code: "005"},
+    {src: "photos/001.webp", code: "001"},
+    {src: "photos/002.webp", code: "002"},
+    {src: "photos/003.webp", code: "003"},
+    {src: "photos/004.webp", code: "004"}
+    
+];
