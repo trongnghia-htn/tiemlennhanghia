@@ -21,6 +21,12 @@
     }
     </script>
     <style>
+        html {
+            touch-action: manipulation;
+        }
+        * {
+            -webkit-tap-highlight-color: transparent;
+        }
         body {
             background: linear-gradient(360deg, #e2c9ec 0%, #f9e6b3 50%, #c9eaf3 100%);
             min-height: 100vh;
@@ -524,7 +530,7 @@
     </div>
     <div class="footer-end">
         © 2025 Nghĩa.<br>
-        Thiết kế và phát triển bởi TIỆM LEN NHÀ NGHĨA</a>
+        Thiết kế và phát triển bởi TIỆM LEN NHÀ NGHĨA</a> <br>
     </div>
     <script src="products.js"></script>
     <script src="galleryImages.js"></script>
@@ -563,6 +569,10 @@
                 gallery.appendChild(figure);
             }
             renderPagination();
+            // Thêm đoạn này:
+            if (window.matchMedia('(max-width: 600px) and (hover: none) and (pointer: coarse)').matches) {
+                gallery.scrollIntoView({ behavior: "auto", block: "nearest" });
+            }
         }
 
         function renderPagination() {
@@ -623,6 +633,10 @@
                 gallery.appendChild(figure);
             }
             renderSearchPagination();
+            // Thêm đoạn này:
+            if (window.matchMedia('(max-width: 600px) and (hover: none) and (pointer: coarse)').matches) {
+                gallery.scrollIntoView({ behavior: "auto", block: "nearest" });
+            }
         }
 
         function renderSearchPagination() {
@@ -723,8 +737,8 @@
                 zoomView.style.display = "none";
             };
             setTimeout(() => {
-                zoomView.scrollIntoView({ behavior: "smooth", block: "center" });
-            }, 100);
+                zoomView.scrollIntoView({ behavior: "auto", block: "center" });
+            }, 0);
         }
 
         const menuItems = document.querySelectorAll('.menu a');
@@ -733,7 +747,7 @@
         const searchPopup = document.getElementById('search-popup');
 
         menuItems.forEach((item) => {
-            item.addEventListener('click', function(e) {
+            function handler(e) {
                 if (this.classList.contains('active')) {
                     this.classList.remove('active');
                     if (this === lienheIcon) popup.classList.remove('active');
@@ -762,7 +776,9 @@
                     searchInput.value = '';
                     document.getElementById('searchResult').innerHTML = '';
                 }
-            });
+            }
+            item.addEventListener('touchstart', handler);
+            item.addEventListener('click', handler);
         });
 
         let lastScroll = window.scrollY;
@@ -771,51 +787,83 @@
 
         window.addEventListener('scroll', function() {
             let currentScroll = window.scrollY;
-            if (
-                searchPopup.classList.contains('active') &&
-                (isSearching && searchResults.length > 0)
-            ) {
+            // Chỉ áp dụng logic ẩn popup khi lướt cho máy tính (không phải thiết bị cảm ứng nhỏ)
+            const isMobile = window.matchMedia('(max-width: 600px) and (hover: none) and (pointer: coarse)').matches;
+            if (!isMobile) {
+                // --- Giữ nguyên logic cũ cho máy tính ---
+                if (
+                    searchPopup.classList.contains('active') &&
+                    (isSearching && searchResults.length > 0)
+                ) {
+                    if (currentScroll < lastScroll) {
+                        menu.classList.add('show');
+                        menu.classList.remove('hide');
+                        searchPopup.classList.add('active');
+                    } else if (currentScroll > lastScroll) {
+                        menu.classList.add('hide');
+                        menu.classList.remove('show');
+                        searchPopup.classList.remove('active');
+                    }
+                    lastScroll = currentScroll;
+                    return;
+                }
+                if (
+                    searchPopup.classList.contains('active') &&
+                    searchInput.value.trim() !== ''
+                ) {
+                    menu.classList.add('show');
+                    menu.classList.remove('hide');
+                    return;
+                }
                 if (currentScroll < lastScroll) {
                     menu.classList.add('show');
                     menu.classList.remove('hide');
-                    searchPopup.classList.add('active');
+                    if (lienheIcon.classList.contains('active')) {
+                        popup.classList.add('active');
+                    }
+                    if (searchPopup && document.querySelector('.menu a[href="#tiemkim"]').classList.contains('active')) {
+                        searchPopup.classList.add('active');
+                    }
                 } else if (currentScroll > lastScroll) {
                     menu.classList.add('hide');
                     menu.classList.remove('show');
-                    searchPopup.classList.remove('active');
+                    popup.classList.remove('active');
+                    if (searchPopup) {
+                        searchPopup.classList.remove('active');
+                        searchInput.value = '';
+                        document.getElementById('searchResult').innerHTML = '';
+                    }
                 }
                 lastScroll = currentScroll;
-                return;
-            }
-            if (
-                searchPopup.classList.contains('active') &&
-                searchInput.value.trim() !== ''
-            ) {
-                menu.classList.add('show');
-                menu.classList.remove('hide');
-                return;
-            }
-            if (currentScroll < lastScroll) {
-                menu.classList.add('show');
-                menu.classList.remove('hide');
-                if (lienheIcon.classList.contains('active')) {
-                    popup.classList.add('active');
+            } else {
+                // --- Trên điện thoại: chỉ ẩn/hiện menu, KHÔNG đóng popup khi lướt ---
+                if (currentScroll < lastScroll) {
+                    menu.classList.add('show');
+                    menu.classList.remove('hide');
+                } else if (currentScroll > lastScroll) {
+                    menu.classList.add('hide');
+                    menu.classList.remove('show');
                 }
-                if (searchPopup && document.querySelector('.menu a[href="#tiemkim"]').classList.contains('active')) {
-                    searchPopup.classList.add('active');
-                }
-            } else if (currentScroll > lastScroll) {
-                menu.classList.add('hide');
-                menu.classList.remove('show');
-                popup.classList.remove('active');
-                if (searchPopup) {
-                    searchPopup.classList.remove('active');
-                    searchInput.value = '';
-                    document.getElementById('searchResult').innerHTML = '';
-                }
+                lastScroll = currentScroll;
             }
-            lastScroll = currentScroll;
         });
+(function() {
+    const searchPopup = document.getElementById('search-popup');
+    let initialHeight = window.innerHeight;
+    window.addEventListener('resize', function() {
+        // Chỉ áp dụng trên mobile
+        if (window.matchMedia('(max-width: 600px) and (hover: none) and (pointer: coarse)').matches) {
+            // Nếu chiều cao giảm nhiều, có thể bàn phím ảo đang mở
+            if (window.innerHeight < initialHeight - 100) {
+                // Đẩy popup lên cao hơn
+                searchPopup.style.bottom = '120px';
+            } else {
+                // Trả về vị trí cũ
+                searchPopup.style.bottom = '24px';
+            }
+        }
+    });
+})();
     </script>
 </body>
 </html>
