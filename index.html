@@ -2,13 +2,14 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Tiệm Len Nhà Nghĩa - Phụ kiện - Quà tặng - Đồ len handmade.</title>
+    <title>Tiệm Len Nhà Nghĩa - Đồ len handmade.</title>
     <meta name="description" content="Tiệm Len Nhà Nghĩa chuyên đồ len handmade, phụ kiện len, quà tặng len dễ thương, nhận làm theo yêu cầu. Giá cả hợp lý, chất lượng uy tín.">
     <meta name="keywords" content="tiệm len, len handmade, phụ kiện len, quà tặng len, Tiệm Len Nhà Nghĩa, đồ len, handmade, móc len, quà tặng, Nghĩa bán len">
     <meta name="author" content="Tiệm Len Nhà Nghĩa">
     <link rel="icon" type="image/webp" href="photos/logo.webp">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <meta name="google-site-verification" content="WgGeR9djbx2N4OKYuFHXf3Wxcw9Tg5i7oXHJkxgwXKE" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -34,8 +35,8 @@
             gap: 20px;
         }
         .row img {
-            width: 100px;
-            height: 100px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
             transition: transform 0.2s, box-shadow 0.2s;
@@ -46,7 +47,7 @@
         }
         .row h1 {
             margin: 0;
-            font-size: 2em;
+            font-size: 2.5em;
             color: #4250d0c4;
             font-family: system-ui, sans-serif;
             background: linear-gradient(90deg, #e91e63, #2196f3, #ffeb3b);
@@ -63,7 +64,7 @@
         }
         .contact {
             font-family: system-ui, sans-serif;
-            font-size: 0.8em;
+            font-size: 0.85em;
             color: #333;
             opacity: 0.7;
             margin: 1px 0;
@@ -89,7 +90,6 @@
             border-radius: 32px;
             bottom: 24px;
             left: 45%;
-            transform: translateX(-50%);
             width: auto;
             z-index: 100;
             font-family: 'Dancing Script', cursive, Arial, sans-serif;
@@ -102,15 +102,14 @@
             font-weight: bold;
             margin: 0 8px;
             transition: color 0.3s;
-            
+            -webkit-tap-highlight-color: transparent;
         }
         .menu a i {
             font-size: 1.7em;
+            transition: color 0.3s;
         }
-        .menu a:hover {
-            color: #c4c4ac;
-        }
-        .menu a.active {
+        .menu a.active,
+        .menu a.active i {
             color: #fafafa !important;
         }
         .menu.hide {
@@ -125,20 +124,15 @@
         }
         .gallery {
             display: grid;
-            grid-template-columns: repeat(5, 1fr); /* 6 ảnh mỗi hàng */
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 24px;
             padding: 24px 5vw;
             justify-items: center;
         }
-        @media (max-width:1204px) {
-            .gallery {
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-        
-            }
-        }
         .gallery img {
-            width: 200px;
-            height: 200px;
+            max-width: 200px;
+            width: 100%;
+            aspect-ratio: 1 / 1;
             object-fit: cover;
             border-radius: 20px;
             transition: transform 0.1s;
@@ -165,14 +159,10 @@
             padding: 4px 20px;
             border-radius: 15px;
             opacity: 0.8;
-            transition: none;
             text-align: center;
-            display: inline-block;
             max-width: 90%;
-            box-sizing: border-box;
             pointer-events: none;
         }
-        
         .dynamic-popup {
             position: fixed;
             left: 50%;
@@ -210,74 +200,81 @@
             align-items: center;
         }
         #searchInput {
-            width: 80%;
-            margin: 0 auto 12px auto;
+            width: 100%;
+            padding: 8px 12px;
+            border-radius: 12px;
+            border: 1px solid #ccc;
+            margin-bottom: 12px;
+            font-size: 1em;
+            box-sizing: border-box;
             display: block;
         }
         #searchResult em {
             font-size: 0.8em;
             opacity: 0.8;
             color: #e53935;
-            
-        }
-        
-        @keyframes fadeInEm {
-            from { opacity: 0; transform: translateY(10px);}
-            to { opacity: 0.8; transform: translateY(0);}
-        }
-        .gallery figure.filter-anim {
-            animation: fadeMoveIn 0.5s;
-            opacity: 0.8;
-            transform: scale(0.96) translateY(10px);
-        }
-        @keyframes fadeMoveIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8) translateY(40px);
-            }
-            to {
-                opacity: 0.8;
-                transform: scale(0.96) translateY(10px);
-            }
         }
         #zoom-view {
-            position: relative;
-            width: 100%;
-            margin: 32px 0;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            z-index: 10;
-            animation: fadeInZoom 0.25s;
-        }
-        @keyframes fadeInZoom {
-            from { opacity: 0; transform: scale(0.95);}
-            to { opacity: 1; transform: scale(1);}
+            align-items: center;
+            gap: 16px;
+            margin: 24px 0;
         }
         .zoom-img {
             width: 100%;
             max-width: 300px;
             max-height: 50vh;
             border-radius: 24px;
-            margin-right: 32px;
+            margin-right: 12px;
             background: #fff;
             padding: 12px;
             object-fit: contain;
             display: block;
         }
-        @keyframes zoomPop {
-            0% {
-                opacity: 0;
-                transform: scale(0.7) rotate(-8deg);
-            }
-            60% {
-                opacity: 1;
-                transform: scale(1.08) rotate(2deg);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) rotate(0deg);
-            }
+        .zoom-info {
+            position: relative;
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px #0002;
+            padding: 22px 28px;
+            min-width: 220px;
+            max-width: 340px;
+            font-family: system-ui, sans-serif;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-left: 8px;
+            word-break: break-word;
+        }
+        .zoom-title {
+            font-size: 1.35em;
+            font-weight: bold;
+            margin-bottom: 6px;
+            text-align: left;
+        }
+        .zoom-price {
+            color: #e53935;
+            font-size: 1.18em;
+            font-weight: bold;
+            margin-bottom: 4px;
+            text-align: left;
+        }
+        .zoom-size-color {
+            font-size: 1em;
+            color: #444;
+            margin-bottom: 4px;
+            line-height: 1.5;
+        }
+        .zoom-intro {
+            font-style:italic;
+            font-weight: normal;
+            font-size: 0.8em;
+            color: #222;
+            margin-top: 2px;
+            line-height: 1.6;
+            text-align: left;
         }
         .zoom-close {
             position: absolute;
@@ -292,64 +289,182 @@
             z-index: 10;
             transition: color 0.2s;
         }
-        .zoom-info {
-            position: relative;              
-            background: #fff;              
-            border-radius: 24px;             
-            box-shadow: 0 8px 32px #0002;   
-            padding: 22px 28px;              
-            min-width: 220px;               
-            max-width: 340px;               
-            font-family: system-ui, sans-serif; 
-            color: #333;                    
-            display: flex;                  
-            flex-direction: column;        
-            gap: 12px;                      
-        }
-        .zoom-title {
-            font-size: 1.35em;               
-            font-weight: bold;              
-            margin-bottom: 6px;                             
-            text-align: left;                
-        }
-        .zoom-price {
-            color: #e53935;                  
-            font-size: 1.18em;               
-            font-weight: bold;                 
-            margin-bottom: 4px;             
-            text-align: left;                
-        }
-        .zoom-size-color {
-            font-size: 1em;               
-            color: #444;                      
-            margin-bottom: 4px;               
-            line-height: 1.5;                 
-        }
-        .zoom-intro {
-            font-style:italic;                
-            font-weight: normal;             
-            font-size: 0.8em;                
-            color: #222;                      
-            margin-top: 2px;                  
-            line-height: 1.6;                
-            text-align: left;               
-        }
         .footer-end {
             text-align: center;
             font-size: 0.95em;
             color: #888;
             opacity: 0.7;
             margin-bottom: 24px;
-            margin-top: 32px;
-            flex-shrink: 0;
+            margin-top: auto;
+            padding: 0 4vw;
+        }
+        /* MOBILE OPTIMIZATION */
+        @media (max-width: 600px) and (hover: none) and (pointer: coarse) {
+            body {
+                min-height: 100vh;
+                font-size: 16px;
+                padding: 0;
+            }
+            .row {
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 10px;
+                padding: 8px 0;
+            }
+            .row img {
+                width: 70px;
+                height: 70px;
+            }
+            .row h1 {
+                font-size: 1.5em;
+                text-align: left;
+                margin-left: 0;
+            }
+            .contact {
+                font-size: 0.75em;
+                text-align: left;
+            }
+            .menu {
+                left: 50%;
+                bottom: 8px;
+                padding: 6px 8px;
+                border-radius: 24px;
+                gap: 8px;
+                transform: translateY(0) !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+            }
+            .menu a i {
+                font-size: 1.3em;
+            }
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                padding: 8px 2vw;
+            }
+            .gallery img {
+                max-width: 100%;
+                border-radius: 12px;
+            }
+            .gallery figcaption {
+                font-size: 0.8em;
+                padding: 2px 8px;
+                border-radius: 8px;
+            }
+            .zoom-img {
+                max-width: 70vw;
+                max-height: 35vh;
+                margin-right: 0;
+                border-radius: 14px;
+                padding: 6px;
+                width: 100%;
+                height: auto;
+            }
+            .zoom-info {
+                width: 260px;
+                max-width: 90vw;
+                min-width: 0;
+                margin-top: 12px;
+                margin-left: 12px;
+                padding: 10px 12px;
+                border-radius: 12px;
+                font-size: 0.95em;
+                gap: 4px;
+            }
+            .zoom-title {
+                font-size: 1.1em;
+            }
+            .zoom-price {
+                font-size: 1em;
+            }
+            .zoom-close {
+                font-size: 1.3em;
+                top: 4px;
+                right: 8px;
+            }
+            #zoom-view {
+                margin: 12px 0;
+                flex-direction: column;
+                align-items: center;
+            }
+            .dynamic-content {
+                padding: 10px 6px;
+                min-width: 0;
+                max-width: 98vw;
+                font-size: 1em;
+            }
+            .footer-end {
+                font-size: 0.8em;
+                padding: 0 4vw;
+                margin-bottom: 12px;
+            }
+            /* Tắt hiệu ứng chuyển động, phóng to, animation cho mobile (chỉ giữ cho tiêu đề) */
+            .row img,
+            .gallery img,
+            .row a:hover img,
+            .gallery img:hover,
+            .gallery figure.filter-anim,
+            #zoom-view,
+            .zoom-img,
+            .zoom-close {
+                transition: none !important;
+                animation: none !important;
+            }
+            .hello {
+                animation: none !important;
+            }
+            .gallery figure,
+            #zoom-view {
+                animation: none !important;
+            }
+            .menu a:hover:not(.active),
+            .menu a:active:not(.active),
+            .menu a:hover:not(.active) i,
+            .menu a:active:not(.active) i {
+                color: #4250d0c4 !important;
+                background: none !important;
+                transition: none !important;
+                filter: none !important;
+            }
+            .menu,
+            .menu.show,
+            .menu.hide {
+                transform: translateY(0) !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+            }
+            .gallery img,
+            .gallery figure {
+                transition: none !important;
+                animation: none !important;
+                outline: none !important;
+                box-shadow: none !important;
+                filter: none !important;
+                background: none !important;
+                -webkit-tap-highlight-color: transparent !important;
+            }
+            .gallery img:active,
+            .gallery figure:active,
+            .gallery img:hover,
+            .gallery figure:hover {
+                transition: none !important;
+                animation: none !important;
+                outline: none !important;
+                box-shadow: none !important;
+                filter: none !important;
+                background: none !important;
+                -webkit-tap-highlight-color: transparent !important;
+                transform: none !important;
+            }
         }
     </style>
 </head>
 <body>
     <div class="row">
-        <a href="https://www.facebook.com/share/1F2p2B7MUk/" target="_blank">
+        <div onclick="location.reload()" style="cursor:pointer;display:inline-block;">
             <img src="photos/logo.webp" alt="LOGO">
-        </a>
+        </div>
         <div>
             <h1>Tiệm Len Nhà Nghĩa</h1>
             <div>
@@ -397,7 +512,7 @@
     </div>
     <div id="search-popup" class="dynamic-popup">
         <div class="dynamic-content" id="search-content">
-            <input type="text" id="searchInput" placeholder="Bạn cần gì nè..." style="width:80%;padding:8px 12px;border-radius:12px;border:1px solid #ccc;margin-bottom:12px;">
+            <input type="text" id="searchInput" placeholder="Bạn cần gì nè...">
             <div id="searchResult" style="font-size:0.95em;color:#333;text-align:left;"></div>
         </div>
     </div>
@@ -408,19 +523,21 @@
         </div>
     </div>
     <div class="footer-end">
-        © 2025 Tiệm Len Nhà Nghĩa. Cảm ơn bạn đã ghé thăm! <br>
-        Thiết kế và phát triển bởi <a href="https://www.facebook.com/share/1F2p2B7MUk/" target="_blank">Tiệm Len Nhà Nghĩa</a>
+        © 2025 Nghĩa.<br>
+        Thiết kế và phát triển bởi TIỆM LEN NHÀ NGHĨA</a>
     </div>
     <script src="products.js"></script>
     <script src="galleryImages.js"></script>
     <script>
-       
-
         const gallery = document.querySelector('.gallery');
         const searchInput = document.getElementById('searchInput');
         const zoomView = document.getElementById('zoom-view');
-        const PAGE_SIZE = 15;
+        let PAGE_SIZE = 15;
+        if (window.innerWidth <= 600) {
+            PAGE_SIZE = 14;
+        }
         let currentPage = 1;
+        let searchTimeout;
 
         function renderGalleryPage(page) {
             gallery.innerHTML = '';
@@ -435,12 +552,11 @@
                 img.height = 200;
                 img.loading = "lazy";
                 img.style.display = "block";
-                img.addEventListener('load', function() {
-                    const caption = document.createElement('figcaption');
-                    caption.textContent = imgData.code;
-                    figure.appendChild(caption);
-                });
                 figure.appendChild(img);
+                // Caption luôn tạo, không cần đợi load
+                const caption = document.createElement('figcaption');
+                caption.textContent = imgData.code;
+                figure.appendChild(caption);
                 figure.addEventListener('click', function() {
                     showZoomView(imgData.code, imgData.src);
                 });
@@ -542,52 +658,9 @@
                 };
             }
         }
-
+        
         searchInput.addEventListener('input', function() {
-            clearTimeout(searchTimeout);
-            zoomView.style.display = "none"; // Ẩn zoomView khi bắt đầu tìm kiếm mới
-            searchTimeout = setTimeout(() => {
-                const query = this.value.trim().toLowerCase();
-                gallery.innerHTML = '';
-                document.getElementById('searchResult').innerHTML = '';
-                isSearching = !!query;
-                let found = false;
-                if (query) {
-                    galleryImages.forEach(imgData => {
-                        const product = (window.products && window.products[imgData.code]) ? window.products[imgData.code] : {};
-                        const infoText = [
-                            product.name,
-                            product.intro,
-                            product.size,
-                            product.color,
-                            product.price
-                        ].filter(Boolean).join(' ').toLowerCase();
-                        if (
-                            imgData.code.toLowerCase().includes(query) ||
-                            infoText.includes(query)
-                        ) {
-                            const figure = document.createElement('figure');
-                            figure.innerHTML = `
-                                <img src="${imgData.src}" loading="lazy">
-                                <figcaption>${imgData.code}</figcaption>
-                            `;
-                            figure.addEventListener('click', function() {
-                                showZoomView(imgData.code, imgData.src);
-                            });
-                            gallery.appendChild(figure);
-                            found = true;
-                        }
-                    });
-                    if (!found) {
-                        document.getElementById('searchResult').innerHTML = '<em>Không tìm thấy kết quả phù hợp!</em>';
-                    }
-                } else {
-                    isSearching = false;
-                    loadedCount = 0;
-                    renderGalleryChunk();
-                    document.getElementById('searchResult').innerHTML = '';
-                }
-            }, 150); // Chỉ thực hiện tìm kiếm sau 150ms kể từ lần nhập cuối
+            zoomView.style.display = "none";
         });
 
         searchInput.addEventListener('keydown', function(e) {
@@ -628,7 +701,7 @@
                     searchPage = 1;
                     renderGalleryPage(currentPage);
                     let pagination = document.getElementById('gallery-pagination');
-                    if (pagination) pagination.innerHTML = '';
+                    if (pagination) pagination.style.display = '';
                 }
             }
         });
@@ -668,14 +741,12 @@
                         searchPopup.classList.remove('active');
                         searchInput.value = '';
                         document.getElementById('searchResult').innerHTML = '';
-                        // Chỉ reset gallery nếu đang ở trạng thái tìm kiếm (isSearching = true)
                         if (isSearching) {
                             isSearching = false;
                             searchResults = [];
                             searchPage = 1;
                             renderGalleryPage(currentPage);
                         }
-                        // KHÔNG ẩn zoomView
                     }
                     return;
                 }
@@ -690,7 +761,6 @@
                     searchPopup.classList.add('active');
                     searchInput.value = '';
                     document.getElementById('searchResult').innerHTML = '';
-                    // KHÔNG ẩn zoomView
                 }
             });
         });
@@ -701,12 +771,10 @@
 
         window.addEventListener('scroll', function() {
             let currentScroll = window.scrollY;
-            // Nếu đang tìm kiếm (đã Enter) và có popup tìm kiếm đang mở
             if (
                 searchPopup.classList.contains('active') &&
                 (isSearching && searchResults.length > 0)
             ) {
-                // Ẩn/hiện popup tìm kiếm cùng menu
                 if (currentScroll < lastScroll) {
                     menu.classList.add('show');
                     menu.classList.remove('hide');
@@ -719,7 +787,6 @@
                 lastScroll = currentScroll;
                 return;
             }
-            // ...phần xử lý cũ...
             if (
                 searchPopup.classList.contains('active') &&
                 searchInput.value.trim() !== ''
