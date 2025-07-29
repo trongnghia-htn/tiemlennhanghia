@@ -331,19 +331,31 @@
                 font-size: 0.75em;
                 text-align: left;
             }
+            
+            .marquee-wrap {
+                position: relative;
+                margin-top: 0;
+                padding-top: 44px;
+            }
             .menu {
-                left: 50%;
-                bottom: 8px;
-                padding: 6px 8px;
-                border-radius: 24px;
+                position: absolute !important;
+                top: 0 !important;
+                bottom: auto !important;
+                right: 12px !important;
+                left: auto !important;
+                margin: 0 !important;
+                z-index: 1002 !important;
+                background: linear-gradient(90deg,#9299d6c4, #4ac8df, #2196f3);
+                border-radius: 24px !important;
+                padding: 6px 10px !important;
+                width: auto !important;
+                display: flex;
+                align-items: center;
                 gap: 8px;
-                transform: translateY(0) !important;
-                opacity: 1 !important;
-                pointer-events: auto !important;
+                
             }
-            .menu a i {
-                font-size: 1.3em;
-            }
+            
+           
             .gallery {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 12px;
@@ -413,13 +425,12 @@
             .gallery figure.filter-anim,
             #zoom-view,
             .zoom-img,
-            .zoom-close {
+            .zoom-close,
+            .hello {
                 transition: none !important;
                 animation: none !important;
             }
-            .hello {
-                animation: none !important;
-            }
+            
             .gallery figure,
             #zoom-view {
                 animation: none !important;
@@ -463,7 +474,40 @@
                 -webkit-tap-highlight-color: transparent !important;
                 transform: none !important;
             }
+            #search-popup.dynamic-popup {
+                position: static !important;
+                left: auto !important;
+                right: auto !important;
+                bottom: auto !important;
+                top: auto !important;
+                transform: none !important;
+                width: 100%;
+                margin: 0 auto 8px auto;
+                z-index: 1;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                display: block !important;
+            }
+            #search-popup:not(.active) {
+                display: none !important;
+            }
+            #search-popup.dynamic-popup,
+            #search-popup .dynamic-content {
+                border-radius: 0 !important;
+            }
+            #searchInput {
+                border-radius: 0 !important;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            *, *::before, *::after {
+                box-shadow: none !important;
+            }
         }
+        
+    
+
     </style>
 </head>
 <body>
@@ -476,15 +520,16 @@
             <div>
                 <p class="contact">Giá cả Ô CÊ 😘</p><br>
                 <p class="contact">Có nhận làm theo yêu cầu 🎇</p><br>
-                <p class="contact">Tăng tính thẩm mỹ cho không gian sống của bạn 🌻</p> <br>
+                <p class="contact">Tăng tính thẩm mỹ cho cuộc sống của bạn 🌻</p> <br>
             </div>
         </div>
     </div>
-    <nav class="menu">
-        <a href="#tiemkim"><i class="fa-solid fa-search"></i></a>
-        <a href="#lienhe"><i class="fa-solid fa-comment-dots"></i></a>
-    </nav>
-    <div class="marquee-wrap"><hr>
+    <div class="marquee-wrap">
+        <nav class="menu">
+            <a href="#tiemkim"><i class="fa-solid fa-search"></i></a>
+            <a href="#lienhe"><i class="fa-solid fa-comment-dots"></i></a>
+        </nav>
+        <hr>
         <p class="hello">Chào mừng các bạn đến với tiệm len của tớ!</p>
     </div>
     <div id="zoom-view" style="display:none;">
@@ -495,6 +540,13 @@
             <div class="zoom-price"></div>
             <div class="zoom-size-color"></div>
             <p class="zoom-intro"></p>
+        </div>
+    </div>
+    <!-- Đặt popup tìm kiếm trước gallery -->
+    <div id="search-popup" class="dynamic-popup">
+        <div class="dynamic-content" id="search-content">
+            <input type="text" id="searchInput" placeholder="Bạn cần gì nè...">
+            <div id="searchResult" style="font-size:0.95em;color:#333;text-align:left;"></div>
         </div>
     </div>
     <div class="gallery"></div>
@@ -516,12 +568,6 @@
             </div>
         </div>
     </div>
-    <div id="search-popup" class="dynamic-popup">
-        <div class="dynamic-content" id="search-content">
-            <input type="text" id="searchInput" placeholder="Bạn cần gì nè...">
-            <div id="searchResult" style="font-size:0.95em;color:#333;text-align:left;"></div>
-        </div>
-    </div>
     <div id="product-popup" class="dynamic-popup" style="z-index:10000;">
         <div class="dynamic-content" id="product-content" style="position:relative;">
             <span id="close-product-popup" style="position:absolute;top:12px;right:18px;font-size:1.5em;cursor:pointer;color:#e53935;">&times;</span>
@@ -538,10 +584,7 @@
         const gallery = document.querySelector('.gallery');
         const searchInput = document.getElementById('searchInput');
         const zoomView = document.getElementById('zoom-view');
-        let PAGE_SIZE = 15;
-        if (window.innerWidth <= 600) {
-            PAGE_SIZE = 14;
-        }
+        let PAGE_SIZE = window.innerWidth <= 600 ? 12 : 15;
         let currentPage = 1;
         let searchTimeout;
 
@@ -569,10 +612,8 @@
                 gallery.appendChild(figure);
             }
             renderPagination();
-            // Thêm đoạn này:
-            if (window.matchMedia('(max-width: 600px) and (hover: none) and (pointer: coarse)').matches) {
-                gallery.scrollIntoView({ behavior: "auto", block: "nearest" });
-            }
+            // Sau khi render xong, cuộn xuống cuối trang
+            window.scrollTo({ top: document.body.scrollHeight, behavior: "auto" });
         }
 
         function renderPagination() {
@@ -633,10 +674,8 @@
                 gallery.appendChild(figure);
             }
             renderSearchPagination();
-            // Thêm đoạn này:
-            if (window.matchMedia('(max-width: 600px) and (hover: none) and (pointer: coarse)').matches) {
-                gallery.scrollIntoView({ behavior: "auto", block: "nearest" });
-            }
+            // Sau khi render xong, cuộn xuống cuối trang
+            window.scrollTo({ top: document.body.scrollHeight, behavior: "auto" });
         }
 
         function renderSearchPagination() {
@@ -748,6 +787,11 @@
 
         menuItems.forEach((item) => {
             function handler(e) {
+                if (e.type === 'touchstart') e.preventDefault();
+                if (item._handled) return; // Đã xử lý rồi thì bỏ qua
+                item._handled = true;
+                setTimeout(() => { item._handled = false; }, 300);
+
                 if (this.classList.contains('active')) {
                     this.classList.remove('active');
                     if (this === lienheIcon) popup.classList.remove('active');
@@ -777,6 +821,7 @@
                     document.getElementById('searchResult').innerHTML = '';
                 }
             }
+
             item.addEventListener('touchstart', handler);
             item.addEventListener('click', handler);
         });
@@ -787,10 +832,8 @@
 
         window.addEventListener('scroll', function() {
             let currentScroll = window.scrollY;
-            // Chỉ áp dụng logic ẩn popup khi lướt cho máy tính (không phải thiết bị cảm ứng nhỏ)
             const isMobile = window.matchMedia('(max-width: 600px) and (hover: none) and (pointer: coarse)').matches;
             if (!isMobile) {
-                // --- Giữ nguyên logic cũ cho máy tính ---
                 if (
                     searchPopup.classList.contains('active') &&
                     (isSearching && searchResults.length > 0)
@@ -836,34 +879,23 @@
                 }
                 lastScroll = currentScroll;
             } else {
-                // --- Trên điện thoại: chỉ ẩn/hiện menu, KHÔNG đóng popup khi lướt ---
-                if (currentScroll < lastScroll) {
-                    menu.classList.add('show');
-                    menu.classList.remove('hide');
-                } else if (currentScroll > lastScroll) {
-                    menu.classList.add('hide');
-                    menu.classList.remove('show');
-                }
+                menu.classList.add('show');
+                menu.classList.remove('hide');
                 lastScroll = currentScroll;
             }
         });
-(function() {
-    const searchPopup = document.getElementById('search-popup');
-    let initialHeight = window.innerHeight;
-    window.addEventListener('resize', function() {
-        // Chỉ áp dụng trên mobile
-        if (window.matchMedia('(max-width: 600px) and (hover: none) and (pointer: coarse)').matches) {
-            // Nếu chiều cao giảm nhiều, có thể bàn phím ảo đang mở
-            if (window.innerHeight < initialHeight - 100) {
-                // Đẩy popup lên cao hơn
-                searchPopup.style.bottom = '120px';
-            } else {
-                // Trả về vị trí cũ
-                searchPopup.style.bottom = '24px';
+
+        window.addEventListener('resize', () => {
+            const newPageSize = window.innerWidth <= 600 ? 12 : 15;
+            if (PAGE_SIZE !== newPageSize) {
+                PAGE_SIZE = newPageSize;
+                if (isSearching && searchResults.length > 0) {
+                    renderSearchPage(1);
+                } else {
+                    renderGalleryPage(1);
+                }
             }
-        }
-    });
-})();
+        });
     </script>
 </body>
 </html>
