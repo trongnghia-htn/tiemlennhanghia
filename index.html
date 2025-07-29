@@ -788,10 +788,11 @@
         menuItems.forEach((item) => {
             function handler(e) {
                 if (e.type === 'touchstart') e.preventDefault();
-                if (item._handled) return; // Đã xử lý rồi thì bỏ qua
+                if (item._handled) return;
                 item._handled = true;
                 setTimeout(() => { item._handled = false; }, 300);
 
+                // Kiểm tra nếu đang active thì tắt popup và bỏ active
                 if (this.classList.contains('active')) {
                     this.classList.remove('active');
                     if (this === lienheIcon) popup.classList.remove('active');
@@ -808,17 +809,34 @@
                     }
                     return;
                 }
-                menuItems.forEach(i => i.classList.remove('active'));
-                popup.classList.remove('active');
-                searchPopup.classList.remove('active');
-                this.classList.add('active');
-                if (this === lienheIcon) {
-                    popup.classList.add('active');
-                }
-                if (this.querySelector('i').classList.contains('fa-search')) {
-                    searchPopup.classList.add('active');
-                    searchInput.value = '';
-                    document.getElementById('searchResult').innerHTML = '';
+
+                // Trên mobile: không tắt popup khi chuyển icon, chỉ bật popup/icon mới
+                const isMobile = window.matchMedia('(max-width: 600px) and (hover: none) and (pointer: coarse)').matches;
+                if (isMobile) {
+                    // Không xóa active các icon khác, chỉ bật popup/icon mới
+                    this.classList.add('active');
+                    if (this === lienheIcon) {
+                        popup.classList.add('active');
+                    }
+                    if (this.querySelector('i').classList.contains('fa-search')) {
+                        searchPopup.classList.add('active');
+                        searchInput.value = '';
+                        document.getElementById('searchResult').innerHTML = '';
+                    }
+                } else {
+                    // Desktop: vẫn giữ logic cũ (chuyển icon thì tắt popup cũ)
+                    menuItems.forEach(i => i.classList.remove('active'));
+                    popup.classList.remove('active');
+                    searchPopup.classList.remove('active');
+                    this.classList.add('active');
+                    if (this === lienheIcon) {
+                        popup.classList.add('active');
+                    }
+                    if (this.querySelector('i').classList.contains('fa-search')) {
+                        searchPopup.classList.add('active');
+                        searchInput.value = '';
+                        document.getElementById('searchResult').innerHTML = '';
+                    }
                 }
             }
 
@@ -832,8 +850,10 @@
 
         window.addEventListener('scroll', function() {
             let currentScroll = window.scrollY;
+            // Chỉ áp dụng logic ẩn popup khi lướt cho máy tính (không phải thiết bị cảm ứng nhỏ)
             const isMobile = window.matchMedia('(max-width: 600px) and (hover: none) and (pointer: coarse)').matches;
             if (!isMobile) {
+                // --- Giữ nguyên logic cũ cho máy tính ---
                 if (
                     searchPopup.classList.contains('active') &&
                     (isSearching && searchResults.length > 0)
@@ -879,6 +899,7 @@
                 }
                 lastScroll = currentScroll;
             } else {
+                // --- Trên điện thoại: menu luôn hiện ---
                 menu.classList.add('show');
                 menu.classList.remove('hide');
                 lastScroll = currentScroll;
@@ -889,6 +910,7 @@
             const newPageSize = window.innerWidth <= 600 ? 12 : 15;
             if (PAGE_SIZE !== newPageSize) {
                 PAGE_SIZE = newPageSize;
+                // Render lại trang hiện tại với PAGE_SIZE mới
                 if (isSearching && searchResults.length > 0) {
                     renderSearchPage(1);
                 } else {
