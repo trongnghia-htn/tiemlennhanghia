@@ -19,5 +19,4 @@ const galleryImages = [
     {src: "photos/002.webp", code: "002"},
     {src: "photos/003.webp", code: "003"},
     {src: "photos/004.webp", code: "004"}
-    
 ];

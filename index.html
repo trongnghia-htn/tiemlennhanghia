@@ -306,6 +306,7 @@
         }
         /* MOBILE OPTIMIZATION */
         @media (max-width: 600px) and (hover: none) and (pointer: coarse) {
+            
             body {
                 min-height: 100vh;
                 font-size: 16px;
@@ -504,6 +505,9 @@
             *, *::before, *::after {
                 box-shadow: none !important;
             }
+            .dynamic-popup {
+                transition: none !important;
+            }        
         }
         
     
@@ -612,8 +616,7 @@
                 gallery.appendChild(figure);
             }
             renderPagination();
-            // Sau khi render xong, cuộn xuống cuối trang
-            window.scrollTo({ top: document.body.scrollHeight, behavior: "auto" });
+           
         }
 
         function renderPagination() {
@@ -656,6 +659,8 @@
         let isSearching = false;
         let searchResults = [];
         let searchPage = 1;
+        let isFirstGalleryRender = true;
+        let isFirstSearchRender = true;
 
         function renderSearchPage(page) {
             gallery.innerHTML = '';
@@ -674,8 +679,7 @@
                 gallery.appendChild(figure);
             }
             renderSearchPagination();
-            // Sau khi render xong, cuộn xuống cuối trang
-            window.scrollTo({ top: document.body.scrollHeight, behavior: "auto" });
+          
         }
 
         function renderSearchPagination() {

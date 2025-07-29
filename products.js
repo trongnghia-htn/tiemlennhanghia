@@ -4,7 +4,7 @@ window.products = {
         "price": "120.000 đ",
         "size": "Đựng được 8kg thịt",
         "color": "Đủ màu",
-        "intro": "Bên trong là cái túi á, nhắn tin tiệm để nhìn cái túi nhaa",
+        "intro": "Nó nhỏ nó gọn mà nó tiện tuyệt vời..",
         "img": "photos/023.webp"
     },
     "003": {
