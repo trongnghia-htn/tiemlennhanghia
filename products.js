@@ -1,4 +1,12 @@
 window.products = {
+    "024": {
+        "name": "Móc Khóa Minion",
+        "price": "45.000 đ",
+        "size": "5 con y hình",
+        "color": "Như ảnh",
+        "intro": "Chỉ bán theo bộ 5 con hoi á",
+        "img": "photos/024.webp"
+    },
     "023": {
         "name": "Túi gấp gọn hoa cúc",
         "price": "120.000 đ",
@@ -35,7 +43,7 @@ window.products = {
         "name": "Chuột Cầm Khốm",
         "price": "48.000 đ",
         "intro": "capypara, móc khóa",
-        "size": "S",
+        "size": "Vừa",
         "color": "Đủ màu",
         "img": "photos/004.webp"
     },
@@ -51,7 +59,7 @@ window.products = {
         "name": "Chuột tý",
         "price": "48.000 đ",
         "intro": "móc khóa chuột tý, dành cho người sợ chuột!",
-        "size": "s",
+        "size": "Vừa",
         "color": "Như hình",
         "img": "photos/006.webp"
     },
@@ -83,7 +91,7 @@ window.products = {
         "name": "Túi Viền Hoa",
         "price": "290.000 đ",
         "intro": "Nó đẹp mà nó lạ...",
-        "size": "s",
+        "size": "Vừa",
         "color": "Đủ màu",
         "img": "photos/010.webp"
     },
@@ -107,7 +115,7 @@ window.products = {
         "name": "Chó Shiba",
         "price": "40.000 đ",
         "intro": "Móc Khóa, Dễ thươnggg",
-        "size": "s",
+        "size": "Vừa",
         "color": "Như hình",
         "img": "photos/013.webp"
     },
@@ -115,7 +123,7 @@ window.products = {
         "name": "Thỏ ú",
         "price": "25.000 đ",
         "intro": "Móc Khóa dễ thươnggggg",
-        "size": "s",
+        "size": "vừa",
         "color": "Đủ màu",
         "img": "photos/015.webp"
     },
@@ -131,7 +139,7 @@ window.products = {
         "name": "Túi hoa 6 cánh",
         "price": "280.000 đ",
         "intro": "Đựng cả thế giới...",
-        "size": "s",
+        "size": "lớn",
         "color": "Đủ màu",
         "img": "photos/017.webp"
     },
@@ -155,7 +163,7 @@ window.products = {
         "name": "Cừu phong cách",
         "price": "45.000 đ",
         "intro": "Móc khóa cũng phải phong cách..",
-        "size": "s",
+        "size": "vừa",
         "color": "Đủ loại",
         "img": "photos/021.webp"
     },
