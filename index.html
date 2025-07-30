@@ -117,12 +117,12 @@
             color: #4250d0c4;
             font-weight: bold;
             margin: 0 8px;
-            transition: color 0.3s;
+            transition: color 0.1s;
             -webkit-tap-highlight-color: transparent;
         }
         .menu a i {
             font-size: 1.7em;
-            transition: color 0.3s;
+            transition: color 0.1s;
         }
         .menu a.active,
         .menu a.active i {
@@ -183,17 +183,17 @@
             position: fixed;
             left: 50%;
             bottom: 90px;
-            transform: translateX(-50%) translateY(30px);
+            transform: translateX(-50%);
             z-index: 9999;
             display: block;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.4s, transform 0.4s;
+            transition: opacity 0.18s;
         }
         .dynamic-popup.active {
             opacity: 1;
             pointer-events: auto;
-            transform: translateX(-50%) translateY(0);
+            transform: translateX(-50%);
         }
         .dynamic-content {
             background: #fff;
@@ -207,9 +207,7 @@
             font-weight: 500;
             transform: scale(1);
         }
-        .dynamic-popup.active .dynamic-content {
-            transform: scale(1.04);
-        }
+        
         #search-content {
             display: flex;
             flex-direction: column;
@@ -428,7 +426,6 @@
                 padding: 0 4vw;
                 margin-bottom: 12px;
             }
-            /* Tắt hiệu ứng chuyển động, phóng to, animation cho mobile (chỉ giữ cho tiêu đề) */
             .row img,
             .gallery img,
             .row a:hover img,
@@ -446,15 +443,7 @@
             #zoom-view {
                 animation: none !important;
             }
-            .menu a:hover:not(.active),
-            .menu a:active:not(.active),
-            .menu a:hover:not(.active) i,
-            .menu a:active:not(.active) i {
-                color: #4250d0c4 !important;
-                background: none !important;
-                transition: none !important;
-                filter: none !important;
-            }
+            
             .menu,
             .menu.show,
             .menu.hide {
@@ -517,11 +506,11 @@
             }
             .dynamic-popup {
                 transition: none !important;
-            }        
+            }
+                    
         }
         
-    
-
+      
     </style>
 </head>
 <body>
@@ -540,8 +529,21 @@
     </div>
     <div class="marquee-wrap">
         <nav class="menu">
-            <a href="#tiemkim"><i class="fa-solid fa-search"></i></a>
-            <a href="#lienhe"><i class="fa-solid fa-comment-dots"></i></a>
+            <a href="#tiemkim" title="Tìm kiếm">
+                <!-- Icon search SVG -->
+                <svg width="1.7em" height="1.7em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+            </a>
+            <a href="#lienhe" title="Liên hệ">
+                <!-- Icon comment SVG -->
+                <svg width="1.7em" height="1.7em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </a>
         </nav>
         <hr>
         <p class="hello">Chào mừng các bạn đến với tiệm len của tớ!</p>
@@ -598,7 +600,7 @@
         const gallery = document.querySelector('.gallery');
         const searchInput = document.getElementById('searchInput');
         const zoomView = document.getElementById('zoom-view');
-        let PAGE_SIZE = window.innerWidth <= 600 ? 12 : 15;
+        let PAGE_SIZE = window.innerWidth <= 600 ? 10 : 15;
         let currentPage = 1;
         let searchTimeout;
 
@@ -680,7 +682,7 @@
                 const imgData = searchResults[i];
                 const figure = document.createElement('figure');
                 figure.innerHTML = `
-                    <img src="${imgData.src}" loading="lazy">
+                    <img src="${imgData.src}" width="200" height="200" loading="lazy">
                     <figcaption>${imgData.code}</figcaption>
                 `;
                 figure.addEventListener('click', function() {
@@ -797,66 +799,81 @@
         const menuItems = document.querySelectorAll('.menu a');
         const popup = document.getElementById('dynamic-popup');
         const lienheIcon = document.querySelector('.menu a[href="#lienhe"]');
+        const searchIcon = document.querySelector('.menu a[href="#tiemkim"]'); // Thêm dòng này
         const searchPopup = document.getElementById('search-popup');
 
         menuItems.forEach((item) => {
-            function handler(e) {
-                if (e.type === 'touchstart') e.preventDefault();
-                if (item._handled) return;
-                item._handled = true;
-                setTimeout(() => { item._handled = false; }, 300);
+    function handler(e) {
+        if (e.type === 'touchstart') e.preventDefault();
+        if (item._handled) return;
+        item._handled = true;
+        setTimeout(() => { item._handled = false; }, 300);
 
-                // Kiểm tra nếu đang active thì tắt popup và bỏ active
-                if (this.classList.contains('active')) {
-                    this.classList.remove('active');
-                    if (this === lienheIcon) popup.classList.remove('active');
-                    if (this.querySelector('i').classList.contains('fa-search')) {
-                        searchPopup.classList.remove('active');
-                        searchInput.value = '';
-                        document.getElementById('searchResult').innerHTML = '';
-                        if (isSearching) {
-                            isSearching = false;
-                            searchResults = [];
-                            searchPage = 1;
-                            renderGalleryPage(currentPage);
-                        }
-                    }
-                    return;
-                }
+        const isMobile = window.matchMedia('(max-width: 600px) and (hover: none) and (pointer: coarse)').matches;
 
-                // Trên mobile: không tắt popup khi chuyển icon, chỉ bật popup/icon mới
-                const isMobile = window.matchMedia('(max-width: 600px) and (hover: none) and (pointer: coarse)').matches;
-                if (isMobile) {
-                    // Không xóa active các icon khác, chỉ bật popup/icon mới
-                    this.classList.add('active');
-                    if (this === lienheIcon) {
-                        popup.classList.add('active');
-                    }
-                    if (this.querySelector('i').classList.contains('fa-search')) {
-                        searchPopup.classList.add('active');
-                        searchInput.value = '';
-                        document.getElementById('searchResult').innerHTML = '';
-                    }
-                } else {
-                    // Desktop: vẫn giữ logic cũ (chuyển icon thì tắt popup cũ)
-                    menuItems.forEach(i => i.classList.remove('active'));
-                    popup.classList.remove('active');
+        if (isMobile) {
+            if (this.classList.contains('active')) {
+                this.classList.remove('active');
+                if (this === lienheIcon) popup.classList.remove('active');
+                if (this === searchIcon) {
                     searchPopup.classList.remove('active');
-                    this.classList.add('active');
-                    if (this === lienheIcon) {
-                        popup.classList.add('active');
+                    searchInput.value = '';
+                    document.getElementById('searchResult').innerHTML = '';
+                    if (isSearching) {
+                        isSearching = false;
+                        searchResults = [];
+                        searchPage = 1;
+                        renderGalleryPage(currentPage);
                     }
-                    if (this.querySelector('i').classList.contains('fa-search')) {
-                        searchPopup.classList.add('active');
-                        searchInput.value = '';
-                        document.getElementById('searchResult').innerHTML = '';
-                    }
+                }
+            } else {
+                this.classList.add('active');
+                if (this === lienheIcon) {
+                    popup.classList.add('active');
+                }
+                if (this === searchIcon) {
+                    searchPopup.classList.add('active');
+                    searchInput.value = '';
+                    document.getElementById('searchResult').innerHTML = '';
                 }
             }
+            return;
+        }
 
-            item.addEventListener('touchstart', handler);
-            item.addEventListener('click', handler);
-        });
+        // Desktop
+        if (this.classList.contains('active')) {
+            this.classList.remove('active');
+            if (this === lienheIcon) popup.classList.remove('active');
+            if (this === searchIcon) {
+                searchPopup.classList.remove('active');
+                searchInput.value = '';
+                document.getElementById('searchResult').innerHTML = '';
+                if (isSearching) {
+                    isSearching = false;
+                    searchResults = [];
+                    searchPage = 1;
+                    renderGalleryPage(currentPage);
+                }
+            }
+            return;
+        }
+        menuItems.forEach(i => i.classList.remove('active'));
+        popup.classList.remove('active');
+        searchPopup.classList.remove('active');
+        this.classList.add('active');
+        if (this === lienheIcon) {
+            popup.classList.add('active');
+        }
+        if (this === searchIcon) {
+            searchPopup.classList.add('active');
+            searchInput.value = '';
+            document.getElementById('searchResult').innerHTML = '';
+        }
+    }
+
+    item.addEventListener('touchstart', handler);
+    item.addEventListener('click', handler);
+});
 
         let lastScroll = window.scrollY;
         const menu = document.querySelector('.menu');
