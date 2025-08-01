@@ -1,4 +1,12 @@
 window.products = {
+    "025": {
+        "name": "Hoa Hướng Dương",
+        "price": "15.000 đ",
+        "size": "vừa",
+        "color": "Cánh Vàng, Nhụy Nâu",
+        "intro": "móc khóa, cành hoa hướng dương",
+        "img": "photos/025.webp"
+    },
     "024": {
         "name": "Móc Khóa Minion",
         "price": "45.000 đ",

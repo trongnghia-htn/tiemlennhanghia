@@ -1,5 +1,4 @@
-const galleryImages = [
-    {src: "photos/024.webp", code: "024"},
+const galleryImages = [  
     {src: "photos/023.webp", code: "023"},
     {src: "photos/022.webp", code: "022"},
     {src: "photos/021.webp", code: "021"},
@@ -12,6 +11,8 @@ const galleryImages = [
     {src: "photos/012.webp", code: "012"},
     {src: "photos/011.webp", code: "011"},
     {src: "photos/010.webp", code: "010"},
+    {src: "photos/025.webp", code: "025"},
+    {src: "photos/024.webp", code: "024"},
     {src: "photos/009.webp", code: "009"},
     {src: "photos/008.webp", code: "008"},
     {src: "photos/007.webp", code: "007"},

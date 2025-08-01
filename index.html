@@ -2,8 +2,8 @@
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
-    <title>Tiệm Len Nhà Nghĩa - Đồ len handmade.</title>
-    <meta name="description" content="Tiệm Len Nhà Nghĩa chuyên đồ len handmade, phụ kiện len, quà tặng len dễ thương, nhận làm theo yêu cầu. Giá cả hợp lý, chất lượng uy tín.">
+    <title>Tiệm Len Nhà Nghĩa - Đồ len Handmade</title>
+    <meta name="description" content="Tiệm Len Nhà Nghĩa chuyên đồ len handmade, phụ kiện len, quà tặng len dễ thương, nhận làm theo yêu cầu, giá cả hợp lý, chất lượng uy tín.">
     <meta name="keywords" content="tiệm len, len handmade, phụ kiện len, quà tặng len, Tiệm Len Nhà Nghĩa, đồ len, handmade, móc len, quà tặng, Nghĩa bán len">
     <meta name="author" content="Tiệm Len Nhà Nghĩa">
     <link rel="icon" type="image/x-icon" href="photos/logo.ico">
@@ -546,7 +546,7 @@
             </a>
         </nav>
         <hr>
-        <p class="hello">Chào mừng các bạn đến với tiệm len của tớ!</p>
+        <p class="hello">Quẹo lựa nha mấy cô chị anh chú ơi!</p>
     </div>
     <div id="zoom-view" style="display:none;">
         <img class="zoom-img" src="" alt="">
@@ -618,7 +618,6 @@
                 img.loading = "lazy";
                 img.style.display = "block";
                 figure.appendChild(img);
-                // Caption luôn tạo, không cần đợi load
                 const caption = document.createElement('figcaption');
                 caption.textContent = imgData.code;
                 figure.appendChild(caption);
@@ -665,7 +664,6 @@
             }
         }
 
-        // Khởi tạo gallery lần đầu
         renderGalleryPage(currentPage);
 
         let isSearching = false;
@@ -749,19 +747,28 @@
                             product.color,
                             product.price
                         ].filter(Boolean).join(' ').toLowerCase();
-                        if (
-                            imgData.code.toLowerCase().includes(query) ||
-                            infoText.includes(query)
-                        ) {
-                            searchResults.push(imgData);
+                        const queryWords = query.split(/\s+/).filter(Boolean);
+                        const codeText = imgData.code.toLowerCase();
+                        const allText = codeText + ' ' + infoText;
+
+                        let score = 0;
+                        if (allText.includes(queryWords[0])) score += 100;
+                        queryWords.forEach(word => {
+                            if (allText.includes(word)) score += 1;
+                        });
+                        if (allText.includes(query)) score += 10; 
+
+                        if (score > 0) {
+                            searchResults.push({ ...imgData, _score: score });
                         }
                     });
                     if (searchResults.length === 0) {
                         gallery.innerHTML = '';
-                        document.getElementById('searchResult').innerHTML = '<em>Không tìm thấy kết quả phù hợp!</em>';
+                        document.getElementById('searchResult').innerHTML = '<em>Tiệm chưa có món này ạ!😭</em>';
                         let pagination = document.getElementById('gallery-pagination');
                         if (pagination) pagination.innerHTML = '';
                     } else {
+                        searchResults.sort((a, b) => b._score - a._score);
                         renderSearchPage(searchPage);
                     }
                 } else {
@@ -799,7 +806,7 @@
         const menuItems = document.querySelectorAll('.menu a');
         const popup = document.getElementById('dynamic-popup');
         const lienheIcon = document.querySelector('.menu a[href="#lienhe"]');
-        const searchIcon = document.querySelector('.menu a[href="#tiemkim"]'); // Thêm dòng này
+        const searchIcon = document.querySelector('.menu a[href="#tiemkim"]'); 
         const searchPopup = document.getElementById('search-popup');
 
         menuItems.forEach((item) => {
@@ -840,7 +847,6 @@
             return;
         }
 
-        // Desktop
         if (this.classList.contains('active')) {
             this.classList.remove('active');
             if (this === lienheIcon) popup.classList.remove('active');
@@ -881,10 +887,8 @@
 
         window.addEventListener('scroll', function() {
             let currentScroll = window.scrollY;
-            // Chỉ áp dụng logic ẩn popup khi lướt cho máy tính (không phải thiết bị cảm ứng nhỏ)
             const isMobile = window.matchMedia('(max-width: 600px) and (hover: none) and (pointer: coarse)').matches;
             if (!isMobile) {
-                // --- Giữ nguyên logic cũ cho máy tính ---
                 if (
                     searchPopup.classList.contains('active') &&
                     (isSearching && searchResults.length > 0)
@@ -930,7 +934,6 @@
                 }
                 lastScroll = currentScroll;
             } else {
-                // --- Trên điện thoại: menu luôn hiện ---
                 menu.classList.add('show');
                 menu.classList.remove('hide');
                 lastScroll = currentScroll;
@@ -941,7 +944,6 @@
             const newPageSize = window.innerWidth <= 600 ? 10 : 15;
             if (PAGE_SIZE !== newPageSize) {
                 PAGE_SIZE = newPageSize;
-                // Render lại trang hiện tại với PAGE_SIZE mới
                 if (isSearching && searchResults.length > 0) {
                     renderSearchPage(1);
                 } else {
