@@ -1,4 +1,12 @@
 window.products = {
+    "020": {
+        "name": "Mèo Mimi",
+        "price": "35.000 đ",
+        "size": "vừa",
+        "color": "Tùy chọn",
+        "intro": "Móc khóa mèo mimi, màu sắc tùy chọn",
+        "img": "photos/020.webp"
+    },
     "025": {
         "name": "Hoa Hướng Dương",
         "price": "15.000 đ",
