@@ -1,4 +1,5 @@
 const galleryImages = [
+    {src: "photos/000.webp", code: "000"},
     {src: "photos/020.webp", code: "020"},
     {src: "photos/023.webp", code: "023"},
     {src: "photos/022.webp", code: "022"},

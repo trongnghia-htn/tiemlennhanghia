@@ -1,4 +1,12 @@
 window.products = {
+    "000": {
+        "name": "Bộ Dụng Cụ Móc Len",
+        "price": "95.000 đ",
+        "size": "9 món",
+        "color": "Như hình",
+        "intro": "6 đánh dấu, 4 kim khâu, 5 kim định hình, 3 móc khóa, 2 nút gỗ 20mm, 1 nút hít, 2 kẹp cố định, 2 kim móc 2 đầu loại 2-3 và 4-6, mắt thú 5mm-6mm-7mm mỗi loại 2 cái",
+        "img": "photos/000.webp"
+    },
     "020": {
         "name": "Mèo Mimi",
         "price": "35.000 đ",
