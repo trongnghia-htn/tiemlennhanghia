@@ -6,8 +6,13 @@
     <meta name="description" content="Tiệm Len Nhà Nghĩa chuyên đồ len handmade, phụ kiện len, quà tặng len dễ thương, nhận làm theo yêu cầu, giá cả hợp lý, chất lượng uy tín.">
     <meta name="keywords" content="tiệm len, len handmade, phụ kiện len, quà tặng len, Tiệm Len Nhà Nghĩa, đồ len, handmade, móc len, quà tặng, Nghĩa bán len">
     <meta name="author" content="Tiệm Len Nhà Nghĩa">
-    <link rel="icon" type="image/x-icon" href="photos/logo.ico">
-    <link rel="icon" type="image/png" href="photos/logo.png" sizes="48x48">
+    <meta property="og:title" content="Tiệm Len Nhà Nghĩa - Đồ len Handmade">
+    <meta property="og:description" content="Tiệm Len Nhà Nghĩa chuyên đồ len handmade, phụ kiện len, quà tặng len dễ thương, nhận làm theo yêu cầu.">
+    <meta property="og:image" content="https://trongnghia-htn.github.io/tiemlennhanghia/photos/thumnail.png">
+    <meta property="og:url" content="https://trongnghia-htn.github.io/tiemlennhanghia/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Tiệm Len Nhà Nghĩa">
+    <link rel="preload" as="image" href="photos/logo.webp">
     <link rel="icon" type="image/webp" href="photos/logo.webp">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <meta name="google-site-verification" content="WgGeR9djbx2N4OKYuFHXf3Wxcw9Tg5i7oXHJkxgwXKE" />
@@ -312,6 +317,58 @@
             margin-top: auto;
             padding: 0 4vw;
         }
+        .hidden-body > :not(#intro-overlay) {
+        display: none !important;
+        }
+        #intro-overlay {
+            position: fixed;
+            z-index: 99999;
+            inset: 0;
+            background: linear-gradient(360deg, #e2c9ec 0%, #f9e6b3 50%, #c9eaf3 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.4s;
+        }
+        #intro-overlay.hide {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s;
+        }
+       
+        #intro-overlay h1,
+        #intro-overlay .intro-sub {
+            animation: introScaleFade 1s cubic-bezier(.4,1.6,.6,1) forwards;
+        }
+        .intro-sub {
+            font-size: 1em;
+            font-weight: bold;
+            color: #634141;
+            font-family: system-ui,sans-serif;
+            text-align: center;
+            opacity: 0.8;
+            margin-top: 2px;
+        }
+        #intro-overlay h1 {
+            margin-bottom: 0.1em;
+            animation: introScaleFade 1s cubic-bezier(.4,1.6,.6,1) forwards;
+        }
+        @keyframes introScaleFade {
+            0% {
+                opacity: 0.2;
+                transform: scale(0.7);
+            }
+            60% {
+                opacity: 1;
+                transform: scale(1.08);
+            
+            }
+            100% {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+        }
         /* MOBILE OPTIMIZATION */
         @media (max-width: 600px) and (hover: none) and (pointer: coarse) {
             
@@ -510,10 +567,83 @@
                     
         }
         
-      
+            #gallery-pagination {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 6px;
+                margin: 16px 0;
+                background: none;
+                font-family: system-ui, sans-serif;
+                font-weight: 500;
+            }
+
+            .pagination-btn {
+                background: linear-gradient(145deg, #6a5a8c, #9e8aac);
+                border: none;
+                color: #fdfaff;
+                font-size: 1.5em;
+                border-radius: 50%;
+                width: 48px;
+                height: 48px;
+                min-width: 48px;
+                min-height: 48px;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                box-shadow: 0 2px 8px #0003;
+                padding: 0;
+                border: 2px solid #bca6d5;
+            }
+
+            .pagination-btn:disabled {
+                opacity: 1; 
+            }
+            .pagination-btn:disabled .arrow {
+                opacity: 0.3;
+            }
+
+            .pagination-center {
+                display: flex;
+                align-items: center;
+                background: linear-gradient(90deg, #6a5a8c 70%, #fdfaff 100%);
+                border-radius: 24px;
+                padding: 0 18px;
+                height: 48px;
+                min-height: 48px;
+                gap: 4px;
+                border: 1px solid #bca6d5;
+            }
+
+            .pagination-current {
+                background: linear-gradient(220deg, #e7c873 60%, #fffbe9 100%);
+                color: #4a3f6d;
+                border-radius: 10px;
+                padding: 2px 6px;
+                font-size: 1.05em;
+                margin: 0 2px;
+                border: 1px solid #d5b87a;
+                min-width: 22px;
+                text-align: center;
+                display: inline-block;
+                height: 28px;
+                line-height: 28px;
+                font-weight: bold;
+            }
+
+            #gallery-pagination span {
+                color: #fdfaff;
+                font-size: 1em;
+            }
     </style>
 </head>
-<body>
+<body class="hidden-body">
+    <div id="intro-overlay">
+        <h1 style="font-size:2em;color:#227196c4;font-family:system-ui,sans-serif;text-align:center;">
+            Tiệm Len Nhà Nghĩa</h1>
+        <div class="intro-sub">Mẫu đẹp - Giá tốt</div>
+    </div>
     <div class="row">
         <div onclick="location.reload()" style="cursor:pointer;display:inline-block;">
             <img src="photos/logo.webp" alt="LOGO">
@@ -530,6 +660,7 @@
     <div class="marquee-wrap">
         <nav class="menu">
             <a href="#tiemkim" title="Tìm kiếm">
+                <!-- Icon search SVG -->
                 <svg width="1.7em" height="1.7em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;">
                     <circle cx="11" cy="11" r="8"></circle>
@@ -537,6 +668,7 @@
                 </svg>
             </a>
             <a href="#lienhe" title="Liên hệ">
+                <!-- Icon comment SVG -->
                 <svg width="1.7em" height="1.7em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;">
                     <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -633,33 +765,52 @@
             if (!pagination) {
                 pagination = document.createElement('div');
                 pagination.id = 'gallery-pagination';
-                pagination.style.textAlign = 'center';
-                pagination.style.margin = '16px 0';
                 gallery.parentNode.insertBefore(pagination, document.getElementById('gallery-message'));
             }
             const totalPages = Math.ceil(galleryImages.length / PAGE_SIZE);
-            let html = '';
-            if (currentPage > 1) {
-                html += `<button id="prev-page">Trang trước</button> `;
-            }
-            html += `Trang ${currentPage} / ${totalPages}`;
-            if (currentPage < totalPages) {
-                html += ` <button id="next-page">Trang sau</button>`;
-            }
+            let html = `
+                <button class="pagination-btn" id="prev-page" ${currentPage === 1 ? 'disabled' : ''} title="Trang trước"><span class="arrow">&#8592;</span></button>
+                <div class="pagination-center">
+                    <span>Trang</span>
+                    <input type="text" inputmode="numeric" pattern="[0-9]*" min="1" max="${totalPages}" value="${currentPage}" class="pagination-current" id="page-input" style="width:44px;text-align:center;">
+                    <span>/ ${totalPages}</span>
+                </div>
+                <button class="pagination-btn" id="next-page" ${currentPage === totalPages ? 'disabled' : ''} title="Trang sau"><span class="arrow">&#8594;</span></button>
+            `;
             pagination.innerHTML = html;
 
-            if (currentPage > 1) {
-                document.getElementById('prev-page').onclick = () => {
+            document.getElementById('prev-page').onclick = () => {
+                if (currentPage > 1) {
                     currentPage--;
                     renderGalleryPage(currentPage);
-                };
-            }
-            if (currentPage < totalPages) {
-                document.getElementById('next-page').onclick = () => {
+                }
+            };
+            document.getElementById('next-page').onclick = () => {
+                if (currentPage < totalPages) {
                     currentPage++;
                     renderGalleryPage(currentPage);
-                };
-            }
+                }
+            };
+            const pageInput = document.getElementById('page-input');
+            pageInput.addEventListener('focus', function() {
+                this.value = '';
+            });
+            pageInput.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+            pageInput.addEventListener('blur', function() {
+                let val = parseInt(this.value, 10);
+                if (isNaN(val) || val < 1) val = 1;
+                if (val > totalPages) val = totalPages;
+                currentPage = val;
+                renderGalleryPage(currentPage);
+            });
+            pageInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    this.blur();
+                }
+            });
+
         }
 
         renderGalleryPage(currentPage);
@@ -695,33 +846,51 @@
             if (!pagination) {
                 pagination = document.createElement('div');
                 pagination.id = 'gallery-pagination';
-                pagination.style.textAlign = 'center';
-                pagination.style.margin = '16px 0';
                 gallery.parentNode.insertBefore(pagination, document.getElementById('gallery-message'));
             }
             const totalPages = Math.ceil(searchResults.length / PAGE_SIZE) || 1;
-            let html = '';
-            if (searchPage > 1) {
-                html += `<button id="prev-search-page">Trang trước</button> `;
-            }
-            html += `Trang ${searchPage} / ${totalPages}`;
-            if (searchPage < totalPages) {
-                html += ` <button id="next-search-page">Trang sau</button>`;
-            }
+            let html = `
+                <button class="pagination-btn" id="prev-page" ${currentPage === 1 ? 'disabled' : ''} title="Trang trước"><span class="arrow">&#8592;</span></button>
+                <div class="pagination-center">
+                    <span>Trang</span>
+                    <input type="text" inputmode="numeric" pattern="[0-9]*" min="1" max="${totalPages}" value="${currentPage}" class="pagination-current" id="page-input" style="width:44px;text-align:center;">
+                    <span>/ ${totalPages}</span>
+                </div>
+                <button class="pagination-btn" id="next-page" ${currentPage === totalPages ? 'disabled' : ''} title="Trang sau"><span class="arrow">&#8594;</span></button>
+            `;
             pagination.innerHTML = html;
 
-            if (searchPage > 1) {
-                document.getElementById('prev-search-page').onclick = () => {
+            document.getElementById('prev-search-page').onclick = () => {
+                if (searchPage > 1) {
                     searchPage--;
                     renderSearchPage(searchPage);
-                };
-            }
-            if (searchPage < totalPages) {
-                document.getElementById('next-search-page').onclick = () => {
+                }
+            };
+            document.getElementById('next-search-page').onclick = () => {
+                if (searchPage < totalPages) {
                     searchPage++;
                     renderSearchPage(searchPage);
-                };
-            }
+                }
+            };
+            const searchPageInput = document.getElementById('search-page-input');
+            searchPageInput.addEventListener('focus', function() {
+                this.value = '';
+            });
+            searchPageInput.addEventListener('input', function() {
+                this.value = this.value.replace(/[^0-9]/g, '');
+            });
+            searchPageInput.addEventListener('blur', function() {
+                let val = parseInt(this.value, 10);
+                if (isNaN(val) || val < 1) val = 1;
+                if (val > totalPages) val = totalPages;
+                searchPage = val;
+                renderSearchPage(searchPage);
+            });
+            searchPageInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    this.blur();
+                }
+            });
         }
         
         searchInput.addEventListener('input', function() {
@@ -949,6 +1118,17 @@
                 }
             }
         });
+        window.addEventListener('DOMContentLoaded', function() {
+           
+
+            setTimeout(function() {
+                document.getElementById('intro-overlay').classList.add('hide');
+                setTimeout(function() {
+                    document.body.classList.remove('hidden-body');
+                }, 10);
+            }, 500);
+        });                
     </script>
 </body>
+
 </html>
