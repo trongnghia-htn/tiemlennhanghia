@@ -772,47 +772,32 @@
                 const start = (page - 1) * PAGE_SIZE;
                 const end = Math.min(start + PAGE_SIZE, galleryImages.length);
                 const items = end - start;
-                // Nếu số lượng phần tử gallery chưa đủ/thừa thì thêm/xóa cho đủ
-                while (gallery.children.length > items) {
-                    gallery.removeChild(gallery.lastChild);
-                }
-                while (gallery.children.length < items) {
+                // Sử dụng DocumentFragment để tăng hiệu suất
+                const fragment = document.createDocumentFragment();
+                for (let i = 0; i < items; i++) {
+                    const imgData = galleryImages[start + i];
                     const figure = document.createElement('figure');
                     const img = document.createElement('img');
                     img.width = 200;
                     img.height = 200;
                     img.loading = "lazy";
                     img.style.display = "block";
-                    figure.appendChild(img);
-                    const caption = document.createElement('figcaption');
-                    figure.appendChild(caption);
-                    figure.addEventListener('click', function() {
-                        showZoomView('', ''); // sẽ cập nhật lại sau
-                    });
-                    gallery.appendChild(figure);
-                }
-                // Cập nhật nội dung từng phần tử
-                for (let i = 0; i < items; i++) {
-                    const imgData = galleryImages[start + i];
-                    const figure = gallery.children[i];
-                    const img = figure.querySelector('img');
-                    const caption = figure.querySelector('figcaption');
                     img.src = imgData.src;
                     img.alt = imgData.code;
+                    figure.appendChild(img);
+                    const caption = document.createElement('figcaption');
                     caption.textContent = imgData.code;
-                    // Xóa event cũ, gán event mới
+                    figure.appendChild(caption);
                     figure.onclick = function() {
                         showZoomView(imgData.code, imgData.src);
                     };
+                    fragment.appendChild(figure);
                 }
+                gallery.innerHTML = '';
+                gallery.appendChild(fragment);
                 renderPagination();
                 gallery.classList.remove('loading');
                 gallery.style.display = '';
-                // Scroll đến thanh phân trang khi chuyển trang
-                const pagination = document.getElementById('gallery-pagination');
-                if (pagination) {
-                    pagination.scrollIntoView({ behavior: 'auto', block: 'start' });
-                }
             });
         }
 
@@ -883,44 +868,32 @@
                 const start = (page - 1) * PAGE_SIZE;
                 const end = Math.min(start + PAGE_SIZE, searchResults.length);
                 const items = end - start;
-                while (gallery.children.length > items) {
-                    gallery.removeChild(gallery.lastChild);
-                }
-                while (gallery.children.length < items) {
+                // Sử dụng DocumentFragment để tăng hiệu suất
+                const fragment = document.createDocumentFragment();
+                for (let i = 0; i < items; i++) {
+                    const imgData = searchResults[start + i];
                     const figure = document.createElement('figure');
                     const img = document.createElement('img');
                     img.width = 200;
                     img.height = 200;
                     img.loading = "lazy";
                     img.style.display = "block";
-                    figure.appendChild(img);
-                    const caption = document.createElement('figcaption');
-                    figure.appendChild(caption);
-                    figure.addEventListener('click', function() {
-                        showZoomView('', '');
-                    });
-                    gallery.appendChild(figure);
-                }
-                for (let i = 0; i < items; i++) {
-                    const imgData = searchResults[start + i];
-                    const figure = gallery.children[i];
-                    const img = figure.querySelector('img');
-                    const caption = figure.querySelector('figcaption');
                     img.src = imgData.src;
                     img.alt = imgData.code;
+                    figure.appendChild(img);
+                    const caption = document.createElement('figcaption');
                     caption.textContent = imgData.code;
+                    figure.appendChild(caption);
                     figure.onclick = function() {
                         showZoomView(imgData.code, imgData.src);
                     };
+                    fragment.appendChild(figure);
                 }
+                gallery.innerHTML = '';
+                gallery.appendChild(fragment);
                 renderSearchPagination();
                 gallery.classList.remove('loading');
                 gallery.style.display = '';
-                // Scroll đến thanh phân trang khi chuyển trang tìm kiếm
-                const pagination = document.getElementById('gallery-pagination');
-                if (pagination) {
-                    pagination.scrollIntoView({ behavior: 'auto', block: 'start' });
-                }
             });
         }
 
