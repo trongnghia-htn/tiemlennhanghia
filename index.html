@@ -532,12 +532,12 @@
            
             #search-popup.dynamic-popup {
                 position: absolute !important;
-                top: 99px !important;
-                left: 8px !important;
+                top: -5px !important;
+                left: 30px !important;
                 right: auto !important;
                 bottom: auto !important;
                 transform: none !important;
-                width: calc(90vw - 100px) !important;
+                width: calc(80vw - 100px) !important;
                 z-index: 1002 !important;
                 margin: 0 !important;
                 display: flex !important;
@@ -684,6 +684,12 @@
                 </svg>
             </a>
         </nav>
+        <div id="search-popup" class="dynamic-popup">
+        <div class="dynamic-content" id="search-content">
+            <input type="search" id="searchInput" placeholder="Bạn cần gì nè..." inputmode="search" enterkeyhint="search" autocomplete="off">
+            <div id="searchResult" style="font-size:0.95em;color:#333;text-align:left;"></div>
+        </div>
+    </div>
         <hr>
         <p class="hello">Quẹo lựa nha mấy cô chị anh chú ơi!</p>
     </div>
@@ -700,12 +706,7 @@
     
     <div class="gallery"></div>
     <!-- Đặt popup tìm kiếm trước gallery -->
-    <div id="search-popup" class="dynamic-popup">
-        <div class="dynamic-content" id="search-content">
-            <input type="search" id="searchInput" placeholder="Bạn cần gì nè..." inputmode="search" enterkeyhint="search" autocomplete="off">
-            <div id="searchResult" style="font-size:0.95em;color:#333;text-align:left;"></div>
-        </div>
-    </div>
+    
     <div id="gallery-message" style="text-align:center;margin:16px 0 0 0;"></div>
             <!-- Modal thông báo hướng dẫn -->
                     <div id="modal-huongdan" style="display:none;position:fixed;z-index:20000;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.45);justify-content:center;align-items:center;">
