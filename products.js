@@ -1,4 +1,12 @@
 window.products = {
+    "026": {
+        "name": "Heart Pillow",
+        "price": "290.000 đ",
+        "size": "≈33x25cm",
+        "color": "Theo yêu cầu",
+        "intro": "Gối trái tim dành tặng cho người trong tim :>",
+        "img": "photos/026.webp"
+    },
     "000": {
         "name": "Bộ Dụng Cụ Móc Len",
         "price": "95.000 đ",
