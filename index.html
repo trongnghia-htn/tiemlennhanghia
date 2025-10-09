@@ -1,6 +1,17 @@
+<!-- ver 1.0.1 -->
+
 <!DOCTYPE html>
 <html lang="vi">
 <head>
+        <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7LYGRT2QND"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-7LYGRT2QND');
+    </script>
     <meta charset="UTF-8">
     <title>Tiệm Len Nhà Nghĩa - Đồ len Handmade</title>
     <meta name="description" content="Tiệm Len Nhà Nghĩa chuyên đồ len handmade, phụ kiện len, quà tặng len dễ thương, nhận làm theo yêu cầu, giá cả hợp lý, chất lượng uy tín.">
@@ -155,11 +166,16 @@
             aspect-ratio: 1 / 1;
             object-fit: cover;
             border-radius: 20px;
-            transition: transform 0.1s;
+            transition: transform 280ms cubic-bezier(.2,.8,.2,1), box-shadow 280ms cubic-bezier(.2,.8,.2,1);
             cursor: pointer;
+            will-change: transform, box-shadow;
+            transform-origin: center center;
+            -webkit-backface-visibility: hidden;
+            backface-visibility: hidden;
         }
         .gallery img:hover {
-            transform: scale(1.02);
+            transform: scale(1.06) translateZ(0);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.18);
         }
         .gallery figure {
             margin: 0;
@@ -662,7 +678,7 @@
         <div>
             <h1>Tiệm Len Nhà Nghĩa</h1>
             <div>
-              <p class="contact">Giá cả Ô CÊ 😘</p><br>
+              <p class="contact">Giá cả hợp lí 😘</p><br>
                 <p class="contact">Đa dạng mẫu mã 🌻</p><br>
                 <p class="contact">Có nhận làm theo yêu cầu 🎇</p> <br>
             </div>
@@ -691,7 +707,7 @@
         </div>
     </div>
         <hr>
-        <p class="hello">Quẹo lựa thoải mái ạ!</p>
+        <p class="hello">Thích là chốt, miễn sao mình vui là được!😍</p>
     </div>
     <div id="zoom-view" style="display:none;">
         <img class="zoom-img" src="" alt="">
@@ -739,8 +755,8 @@
         </div>
     </div>
     <div class="footer-end">
-        © 2025 Nghĩa.<br>
-        Thiết kế và phát triển bởi TIỆM LEN NHÀ NGHĨA</a> <br>
+        © 2025 TIỆM LEN NHÀ NGHĨA<br>
+        Thiết kế và phát triển bởi Chủ Tiệm!</a> <br>
     </div>
     <script src="products.js"></script>
     <script>
